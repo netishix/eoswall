@@ -1,0 +1,91 @@
+<div class="container py-4">
+	<div class="row">
+		<div class="col-12">
+			<div class="row mb-4">
+				<div *ngIf="isCheckingScatter" class="col-12 text-center">
+					Checking for scatter...
+				</div>
+				<div *ngIf="!isCheckingScatter" class="col-12">
+					<div *ngIf="!hasScatterInstalled">
+						<div class="alert alert-warning mb-0">
+							<div class="row justify-content-center">
+								<h1 class="mr-4">
+									<i class="fas fa-exclamation-circle"></i>
+								</h1>
+								<div>
+									You don't have Scatter extension installed. To buy a slot please install Scatter
+									<br> Don't know how to install Scatter? You can download it
+									<a href="https://chrome.google.com/webstore/detail/scatter/ammjpmhgckkpcamddpolhchgomcojkle" target="_blank">here</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div *ngIf="hasScatterInstalled">
+						<div *ngIf="!_AuthService.isLoggedIn()" class="d-flex justify-content-between align-items-center">
+							<hr>
+							<button class="btn btn-outline-info" (click)="_AuthService.login()">
+								<i class="fas fa-sign-in-alt mr-2"></i>
+								<span>Login with Scatter</span>
+							</button>
+							<hr>
+						</div>
+						<div *ngIf="_AuthService.isLoggedIn()">
+							<div *ngIf="!wall.isBuying && !wall.isUpdating" class="text-center">
+								<h4>Welcome,
+									<span class="font-weight-bold">{{_AuthService.account.name}}</span>
+								</h4>
+								<hr>
+								<button class="btn btn-success mr-4" (click)="wall.isBuying = true">Book a piece of blockchain history</button>
+								<button *ngIf="ownsSlots(_AuthService.account.name)" class="btn btn-info mr-4"
+								 (click)="wall.isUpdating = true">Update slot</button>
+								<button class="btn btn-outline-secondary" (click)="_AuthService.logout()">
+									<i class="fas fa-power-off mr-2"></i>
+									<span>Logout</span>
+								</button>
+							</div>
+							<div *ngIf="wall.isBuying">
+								<div class="d-flex justify-content-between align-items-center mb-4">
+									<hr>
+									<button class="btn btn-secondary mr-2" (click)="wall.isBuying = false">
+										<i class="fas fa-times mr-2"></i>
+										<span>Disable buy mode</span>
+									</button>
+									<hr>
+								</div>
+								<h4 class="text-center">
+										Select the slot you want to buy
+								</h4>
+							</div>
+							<div *ngIf="wall.isUpdating">
+								<div class="d-flex justify-content-center align-items-center mb-4">
+										<hr>
+										<button class="btn btn-secondary mr-2" (click)="wall.isUpdating = false">
+											<i class="fas fa-times mr-2"></i>
+											<span>Disable update mode</span>
+										</button>
+										<hr>
+								</div>
+								<h4 class="text-center">
+									Select the slot you want to update
+								</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div *ngIf="!wall.isBuying && !wall.isUpdating" class="col-12 text-center mb-2">
+					<span class="mr-2">Price/pixel:
+						<span class="badge badge-info mr-2">{{Constants.wall.pixelPrice}} EOS</span>
+					</span>
+					<span class="mr-2">Sold slots:
+						<span class="badge badge-info"> {{wall.slots.length}}</span>
+					</span>
+				</div>
+				<div class="col-12">
+					<app-wall [isLoading]="wall.isLoading" [slots]="wall.slots" [isBuying]="wall.isBuying" (buy)="onBuy($event)" [isUpdating]="wall.isUpdating" (update)="onUpdate($event)"></app-wall>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

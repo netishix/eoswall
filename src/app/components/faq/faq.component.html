@@ -1,0 +1,84 @@
+<div class="container">
+  <div class="row p-5">
+    <div class="col-12">
+      <div class="row mb-5">
+        <div class="col-12">
+          <h3 class="border-bottom pb-2 mb-4">Frecuently Asked Questions:</h3>
+          <ngb-accordion [closeOthers]="true">
+            <ngb-panel title="¿What is The EOS Wall?">
+              <ng-template ngbPanelContent>
+                <p>
+                  The EOS Wall project was born as a proof of concept of EOS DAPP.
+                  <br> Every user the has an EOS account can buy a portion of the wall called <span class="font-weight-bold">slot</span>. A slot is composed by a title,
+                  an image and an url to redirect when the slot is clicked.
+                  <br> All the slots are stored in the EOS blockchain and can be updated at anytime by it's owners.
+                </p>
+              </ng-template>
+            </ngb-panel>
+            <ngb-panel title="¿Who pays for RAM?">
+              <ng-template ngbPanelContent>
+                The RAM for every new slot that is registered in the wall is payed by the smart contract itself. However, RAM used for updating
+                a slot is charged to the owner of the slot.
+              </ng-template>
+            </ngb-panel>
+            <ngb-panel title="¿Will the wall be online forever?">
+              <ng-template ngbPanelContent>
+                That's our approach!
+              </ng-template>
+            </ngb-panel>
+            <ngb-panel title="¿Can I trust the external links of the slots?">
+              <ng-template ngbPanelContent>
+                <p>
+                  No, you can't. The EOS Wall is not responsible for the content of external sites referenced by the slots.
+                  <br>
+                  However, we make our best to constantly moderate the slots. Any slot considered malicious will be removed from the wall.
+                </p>
+              </ng-template>
+            </ngb-panel>
+            <ngb-panel title="¿Where can I find the smart contract?">
+              <ng-template ngbPanelContent>
+                <p>The smart contract has the following structure. For more information please refer to
+                  the Ricardian Contracts attached to the smart contract.</p>
+                <ul>
+                  <li class="font-weight-bold mb-2">
+                    <span class="mr-2">Contract:</span>
+                    <span class="badge badge-info">{{Constants.network.code}}</span>
+                  </li>
+                  <li class="font-weight-bold mb-2">
+                    <span class="mr-2">Tables:</span>
+                    <span class="badge badge-info mr-2">slot ({{Constants.network.code}} scope)</span>
+                    <span class="badge badge-info">account (account scope)</span>
+                  </li>
+                  <li class="font-weight-bold mb-2">
+                    <span class="mr-2">Public actions:</span>
+                    <span class="badge badge-info mr-2">buy</span>
+                    <span class="badge badge-info">update</span>
+                  </li>
+                </ul>
+              </ng-template>
+            </ngb-panel>
+            <ngb-panel title="¿Why do I need Scatter to buy a slot?">
+              <ng-template ngbPanelContent>
+                <p>
+                  To buy or update a slot, it is necessary to interact with the EOS blockchain. Scatter extension has the ability to interact
+                  with the blockchain by pushing and signing transactions safely using your browser.
+                </p>
+              </ng-template>
+            </ngb-panel>
+          </ngb-accordion>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <h3 class="border-bottom pb-2 mb-4">Need support? Contact us:</h3>
+          <p>
+            If you need support, found a bug or have any comments you can contact us at <span class="font-weight-bold">hello@eoswall.io</span>
+          </p>
+          <p class="lead">
+            Enjoy!
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

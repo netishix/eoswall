@@ -1,0 +1,173 @@
+
+#app-wall{
+  position:relative;
+  display: block;
+  padding:0;
+  margin:0;
+  width:1000px;
+  height:1000px;
+  z-index:1;
+  background-size: 10px 10px;
+  background-image: linear-gradient(to right, rgb(240, 240, 240) 1px, transparent 1px), linear-gradient(to bottom, rgb(240, 240, 240) 1px, transparent 1px);
+  box-sizing:content-box;
+  border-right: 1px solid rgb(240, 240, 240);
+  border-bottom: 1px solid rgb(240, 240, 240);
+  background-color:#fff;
+}
+
+
+#app-wall.loading{
+    background: linear-gradient(130deg, #b1b1b1, #ffffff, #b1b1b1);
+    background-size: 200% 200%;
+    -webkit-animation: Animation 2s ease infinite;
+    -moz-animation: Animation 2s ease infinite;
+    animation: Animation 2s ease infinite;
+}
+
+@-webkit-keyframes Animation {
+    0%{background-position:10% 0%}
+    50%{background-position:91% 100%}
+    100%{background-position:10% 0%}
+}
+@-moz-keyframes Animation {
+    0%{background-position:10% 0%}
+    50%{background-position:91% 100%}
+    100%{background-position:10% 0%}
+}
+@keyframes Animation { 
+    0%{background-position:10% 0%}
+    50%{background-position:91% 100%}
+    100%{background-position:10% 0%}
+}
+
+.app-slot{
+  position:absolute;
+  display:block;
+  padding:0;
+  margin:0;
+  z-index:2;
+  background-image:no-repeat;
+  background-color:#fff;
+  cursor: pointer;
+}
+
+.app-slot-selected {
+  border: 2px dashed rgb(49, 142, 230);
+}.app-slot-selected:hover {
+  background-color: rgb(213, 229, 243);
+}
+
+
+#app-wall-selection{
+  position:absolute;
+  z-index:3;
+  opacity: 0.8;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;  
+}
+
+#app-wall-selection-info{
+  position:relative;
+  display:block;
+  top:-160px;
+  width:300px;
+  height:140px;
+}
+
+#app-wall-selection-info::before{
+  content:"";
+  position:absolute;
+  bottom: -9px;
+  left: 10px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 10px;
+  border-color: #fff transparent transparent transparent;
+  z-index:1;
+}
+
+#app-wall-selection-info::after{
+  content:"";
+  position:absolute;
+  bottom: -10px;
+  left: 10px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 10px;
+  border-color: rgb(187, 186, 186) transparent transparent transparent;
+}
+
+
+.handle{
+  position:absolute;
+  width:10px;
+  height:10px;
+}
+
+.handle-m{
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  cursor:move;
+}
+
+.handle-tl{
+  top:-10px;
+  left:-10px;
+  cursor:nwse-resize;
+}
+.handle-t{
+  top:-10px;
+  margin-left:-5px;
+  left:50%;
+  cursor:ns-resize;
+}
+.handle-tr{
+  top:-10px;
+  right:-10px;
+  cursor:nesw-resize;
+}
+.handle-r{
+  top:50%;
+  margin-top:-5px;
+  right:-10px;
+  cursor:ew-resize;
+}
+.handle-br{
+  bottom:-10px;
+  right:-10px;
+  cursor:nwse-resize;
+}
+.handle-b{
+  bottom:-10px;
+  left:50%;
+  margin-left:-5px;
+  cursor:ns-resize;
+}
+.handle-bl{
+  bottom:-10px;
+  left:-10px;
+  cursor:nesw-resize;
+}
+.handle-l{
+  top:50%;
+  margin-top:-5px;
+  left:-10px;
+  cursor:ew-resize;
+}
+
+
+.cursor-crosshair{
+  cursor: crosshair;
+}
+
+.disabled-pointer-events{
+  pointer-events:none;
+}
