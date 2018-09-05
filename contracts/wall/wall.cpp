@@ -85,7 +85,7 @@ public:
     eosio_assert(iterator != slots.end(), "The slot does not exist.");
     auto slot = slots.get(id);
     require_auth(slot.owner);
-    slots.modify(iterator, slot.owner, [&](auto &slot) {
+    slots.modify(iterator, _self, [&](auto &slot) {
       slot.title = title;
       slot.image = image;
       slot.url = url;
