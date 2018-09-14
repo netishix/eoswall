@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row p-5">
+  <div class="row py-5">
     <div class="col-12">
       <div class="row mb-5">
         <div class="col-12">
@@ -9,10 +9,47 @@
               <ng-template ngbPanelContent>
                 <p>
                   The EOS Wall project was born as a proof of concept of EOS DAPP.
-                  <br> Every user the has an EOS account can buy a portion of the wall called <span class="font-weight-bold">slot</span>. A slot is composed by a title,
-                  an image and an url to redirect when the slot is clicked.
+                  <br> Every user that has an EOS account can buy a portion of the wall called
+                  <span class="font-weight-bold">slot</span>. A slot is composed by a title, an image and an url to redirect when the slot is clicked.
                   <br> All the slots are stored in the EOS blockchain and can be updated at anytime by it's owners.
                 </p>
+              </ng-template>
+            </ngb-panel>
+            <ngb-panel title="¿How is the price calculated?">
+              <ng-template ngbPanelContent>
+                <p>
+                  The price of a slot is calculated with the following formula:
+                  <br>
+                  <span class="font-weight-bold">
+                    <span class="badge badge-primary">Slot price</span> =
+                    <span class="badge badge-info">Pixel price</span> x
+                    <span class="badge badge-info">Slot pixels</span>
+                  </span>
+                </p>
+                <hr>
+                <p>
+                  The pixel price will change over time automatically depending on the total pixels that had been sold. It is calculated with the following lineal
+                  functions:
+                </p>
+                <ul>
+                    <li class="font-weight-bold mb-4">
+                      When, sold pixels <= 800,000 pixels, then:
+                      <br>
+                      <span class="badge badge-primary">Pixel price</span> =
+                      <span class="badge badge-info">0.0015 EOS</span> /
+                      <span class="badge badge-info">1,000,000 pixels</span> x
+                      <span class="badge badge-info">Pixels sold</span> +
+                      <span class="badge badge-info">0.0005 EOS</span>
+                    </li>
+                    <li class="font-weight-bold"> When, sold pixels > 800,000 pixels, then:
+                      <br>
+                      <span class="badge badge-primary">Pixel price</span> =
+                      <span class="badge badge-info">0.003 EOS</span> /
+                      <span class="badge badge-info">1,000,000 pixels</span> x
+                      <span class="badge badge-info">Pixels sold</span> +
+                      <span class="badge badge-info">0.0005 EOS</span>
+                    </li>
+                  </ul>
               </ng-template>
             </ngb-panel>
             <ngb-panel title="¿Who pays for RAM?">
@@ -20,24 +57,19 @@
                 The RAM for every new slot stored in the wall is payed by the smart contract itself.
               </ng-template>
             </ngb-panel>
-            <ngb-panel title="¿Will the wall be online forever?">
-              <ng-template ngbPanelContent>
-                That's our approach!
-              </ng-template>
-            </ngb-panel>
             <ngb-panel title="¿Can I trust the external links of the slots?">
               <ng-template ngbPanelContent>
                 <p>
-                  No, you can't. The EOS Wall is not responsible for the content of external sites referenced by the slots.
-                  <br>
-                  However, we make our best to constantly moderate the slots. Any slot considered malicious will be removed from the wall.
+                  No, you can't. This app is not responsible for the content of external sites referenced by the slots.
+                  <br> However, we make our best to constantly moderate the slots. Any slot considered malicious will be removed
+                  from the wall.
                 </p>
               </ng-template>
             </ngb-panel>
             <ngb-panel title="¿Where can I find the smart contract?">
               <ng-template ngbPanelContent>
-                <p>The smart contract has the following structure. For more information please refer to
-                  the Ricardian Contracts attached to the smart contract.</p>
+                <p>The smart contract has the following structure. For more information please refer to the Ricardian Contracts
+                  attached to the smart contract.</p>
                 <ul>
                   <li class="font-weight-bold mb-2">
                     <span class="mr-2">Contract:</span>
@@ -71,7 +103,8 @@
         <div class="col-12">
           <h3 class="border-bottom pb-2 mb-4">Need support? Contact us:</h3>
           <p>
-            If you need support, found a bug or have any comments you can contact us at <span class="font-weight-bold">hello@eoswall.io</span>
+            If you need support, found a bug or have any comments you can contact us at
+            <span class="font-weight-bold">support@eoswall.io</span>
           </p>
           <p class="lead">
             Enjoy!

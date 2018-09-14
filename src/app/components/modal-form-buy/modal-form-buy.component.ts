@@ -1,13 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Slot, SlotDescription } from '../../types';
+import { FormGroup, FormBuilder, Validators} from '@angular/forms';
+import { Slot } from '../../lib/slot';
+import { AppValidators } from '../../validators/app.validators';
 @Component({
-  selector: 'app-modal-slot-form',
-  templateUrl: './modal-slot-form.component.html',
-  styleUrls: ['./modal-slot-form.component.scss']
+  selector: 'app-modal-form-buy',
+  templateUrl: './modal-form-buy.component.html',
+  styleUrls: ['./modal-form-buy.component.scss']
 })
-export class ModalSlotFormComponent implements OnInit {
+export class ModalFormBuyComponent implements OnInit {
 
   public slotForm: {
     isLoading: boolean,
@@ -29,18 +30,13 @@ export class ModalSlotFormComponent implements OnInit {
         }
       }
     };
-  @Input() slotDescription: SlotDescription;
-  @Input() buy: boolean;
   @Input() slot: Slot;
+  @Input() hasScatterInstalled: boolean;
 
   constructor(public _NgbActiveModal: NgbActiveModal, public _FormBuilder: FormBuilder) { }
 
   ngOnInit() {
-    if (!this.buy) {
-      this.slotForm.formGroup.get('title').setValue(this.slot.title);
-      this.slotForm.formGroup.get('image').setValue(this.slot.image);
-      this.slotForm.formGroup.get('url').setValue(this.slot.url);
-    }
+    const validatorFn = AppValidators.imageValidator(this.slot);
+    this.slotForm.formGroup.get('image').setAsyncValidators(validatorFn);
   }
-
 }

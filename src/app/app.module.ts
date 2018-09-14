@@ -9,13 +9,14 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { WallComponent } from './components/wall/wall.component';
-import { ModalSlotFormComponent } from './components/modal-slot-form/modal-slot-form.component';
+import { ModalFormBuyComponent } from './components/modal-form-buy/modal-form-buy.component';
+import { ModalFormUpdateComponent } from './components/modal-form-update/modal-form-update.component';
 import { ModalNotificationComponent } from './components/modal-notification/modal-notification.component';
 import { WhyComponent } from './components/why/why.component';
-
-import { AuthService } from './services/auth.service';
-import { MouseService } from './services/mouse.service';
 import { FaqComponent } from './components/faq/faq.component';
+
+import { MouseService } from './services/mouse.service';
+
 
 @NgModule({
   declarations: [
@@ -24,10 +25,11 @@ import { FaqComponent } from './components/faq/faq.component';
     FooterComponent,
     HomeComponent,
     WallComponent,
-    ModalSlotFormComponent,
     ModalNotificationComponent,
     WhyComponent,
     FaqComponent,
+    ModalFormBuyComponent,
+    ModalFormUpdateComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,12 +39,12 @@ import { FaqComponent } from './components/faq/faq.component';
     NgbModule.forRoot(),
   ],
   providers: [
-    AuthService,
     MouseService
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    ModalSlotFormComponent,
+    ModalFormBuyComponent,
+    ModalFormUpdateComponent,
     ModalNotificationComponent
   ]
 })

@@ -1,21 +1,18 @@
-<header id="app-header" class="border-bottom d-flex">
-  <nav class="navbar navbar-expand-lg navbar-light container py-3">
-      <a routerLink="/" class="navbar-brand">The EOS Wall</a>
-      <button class="navbar-toggler mb-4" (click)="isNavbarCollapsed = !isNavbarCollapsed" [attr.aria-expanded]="!isNavbarCollapsed" aria-controls="app-navbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div id="app-navbar" [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item mr-4">
-             <a routerLink="/">The wall</a>
-          </li>
-          <li class="nav-item mr-4">
-            <a routerLink="why">Why</a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="faq">FAQ</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+<header id="app-header" class="border-bottom d-flex bg-info">
+  <nav class="navbar navbar-dark container py-3">
+    <a routerLink="/" class="navbar-brand">
+      <img class="mr-2" src="../../../assets/img/eoswall-blackbg.svg" width="130px">
+    </a>
+    <ul class="navbar-nav flex-row ml-auto">
+      <li class="nav-item mr-4 d-none d-lg-inline-block">
+        <a class="nav-link active font-weight-bold" routerLink="/">The wall</a>
+      </li>
+      <li class="nav-item mr-4">
+        <a class="nav-link active font-weight-bold" routerLink="why">Why</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active font-weight-bold" routerLink="faq">FAQ</a>
+      </li>
+    </ul>
+  </nav>
 </header>

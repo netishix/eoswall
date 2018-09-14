@@ -15,7 +15,7 @@ const Constants = {
     wallWidth: 1000,
     wallHeight: 1000,
     minOrderPixels: 10,
-    pixelPrice: 0.01
+    maxOrderPixels: 100,
   }
 };
 

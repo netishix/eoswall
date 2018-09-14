@@ -6,7 +6,6 @@
   margin:0;
   width:1000px;
   height:1000px;
-  z-index:1;
   background-size: 10px 10px;
   background-image: linear-gradient(to right, rgb(240, 240, 240) 1px, transparent 1px), linear-gradient(to bottom, rgb(240, 240, 240) 1px, transparent 1px);
   box-sizing:content-box;
@@ -23,6 +22,12 @@
     -moz-animation: Animation 2s ease infinite;
     animation: Animation 2s ease infinite;
 }
+
+#app-wall.loading > #app-wall-selection, 
+#app-wall.loading > .app-slot {
+  display: none;
+}
+
 
 @-webkit-keyframes Animation {
     0%{background-position:10% 0%}
@@ -45,8 +50,8 @@
   display:block;
   padding:0;
   margin:0;
-  z-index:2;
-  background-image:no-repeat;
+  z-index:1;
+  background-repeat:no-repeat;
   background-color:#fff;
   cursor: pointer;
 }
@@ -60,7 +65,7 @@
 
 #app-wall-selection{
   position:absolute;
-  z-index:3;
+  z-index:2;
   opacity: 0.8;
   user-select: none;
   -moz-user-select: none;

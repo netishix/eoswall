@@ -19,7 +19,8 @@ class Asset {
   }
 
   public toString(): string {
-    return `${this.amount.toFixed(this.symbol.precision)} ${this.symbol.name}`;
+    const output = `${this.amount.toFixed(this.symbol.precision)} ${this.symbol.name}`;
+    return output;
   }
 
 }

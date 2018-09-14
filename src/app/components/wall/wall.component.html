@@ -1,17 +1,17 @@
 <div id="app-wall-wrapper">
   <div id="app-wall" class="m-auto" [ngClass]="[isBuying?'cursor-crosshair':'',isLoading?'loading':'']">
-    <div id="app-wall-selection" *ngIf="isBuying" [ngStyle]="getPositionStyle(selection.c1,selection.c2)">
+    <div id="app-wall-selection" *ngIf="isBuying" [ngStyle]="selection.slot.cssPosition">
       <div id="app-wall-selection-info" class="p-2 bg-white border rounded">
         <p class="text-center">
-          {{selection.description.size}} at position {{selection.description.position}} ({{selection.description.surface}}) 
+          {{selection.slot.width}}x{{selection.slot.height}} at position {{selection.slot.c1[0]}},{{selection.slot.c1[1]}} ({{selection.slot.pixels}} px) 
         </p>
         <p class="font-weight-bold text-center">
-          Price: {{selection.description.price}}
+          Price: {{selection.slot.price.toString()}}
         </p>
-        <button *ngIf="selection.intersects" class="btn btn-danger btn-block font-weight-bold" disabled>Slot is not available</button>
-        <button *ngIf="!selection.intersects" class="btn btn-success btn-block font-weight-bold" (click)="selectSlot()">Buy this slot</button>
+        <button *ngIf="selection.intersects || selection.exceeded" class="btn btn-danger btn-block font-weight-bold" disabled>{{(selection.intersects) ? 'Slot is not available' : 'Slot is too big'}}</button>
+        <button *ngIf="!selection.intersects && !selection.exceeded" class="btn btn-success btn-block font-weight-bold" (click)="selectSlot()">Buy this slot</button>
       </div>
-      <div class="handle-m" (mousedown)="selection.mousedown = 'm'" [ngClass]="{'bg-danger':selection.intersects,'bg-success':!selection.intersects && isOrdering,'bg-info':!selection.intersects && !isOrdering}"></div>
+      <div class="handle-m" (mousedown)="selection.mousedown = 'm'" [ngClass]="{'bg-danger':selection.intersects || selection.exceeded,'bg-info':!selection.intersects && !selection.exceeded}"></div>
       <div class="handle handle-tl bg-warning" (mousedown)="selection.mousedown = 'tl'"></div>
       <div class="handle handle-t bg-warning" (mousedown)="selection.mousedown = 't'"></div>
       <div class="handle handle-tr bg-warning" (mousedown)="selection.mousedown = 'tr'"></div>
@@ -21,7 +21,7 @@
       <div class="handle handle-bl bg-warning" (mousedown)="selection.mousedown = 'bl'"></div>
       <div class="handle handle-l bg-warning" (mousedown)="selection.mousedown = 'l'"></div>
     </div>
-    <div *ngFor="let slot of slots" class="app-slot" [ngStyle]="getPositionStyle(slot.c1,slot.c2)" [style.backgroundImage]="'url('+slot.image+')'"
-      [ngClass]="[(isBuying)?'disabled-pointer-events':'',(isUpdating && slot.owner !== _AuthService.account.name)?'d-none':'', (isUpdating && slot.owner === _AuthService.account.name)?'app-slot-selected':'']" [ngbTooltip]="slot.title+' ('+slot.owner+')'" (click)="slotClick(slot)">
+    <div *ngFor="let slot of slots" class="app-slot" [ngStyle]="slot.cssPosition" [style.backgroundImage]="'url('+slot.image+')'"
+      [ngClass]="[(isBuying)?'disabled-pointer-events':'',(isUpdating)?'app-slot-selected':'']" [ngbTooltip]="slot.title+' ('+slot.owner+')'" (click)="slotClick(slot)">
     </div>
 </div>
