@@ -1,12 +1,16 @@
-import { Injectable } from '@angular/core';
-import { fromEvent } from 'rxjs';
+import { WINDOW } from '@ng-toolkit/universal';
+import { Injectable, Inject } from '@angular/core';
+import { fromEvent, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MouseService {
 
-  public mouseMove = fromEvent(window, 'mousemove');
-  public mouseUp = fromEvent(window, 'mouseup');
-  constructor() { }
+  public mouseMove: Observable<Event>;
+  public mouseUp: Observable<Event>;
+  constructor(@Inject(WINDOW) private window: Window, ) {
+    this.mouseMove = fromEvent(window, 'mousemove');
+    this.mouseUp = fromEvent(window, 'mouseup');
+   }
 }

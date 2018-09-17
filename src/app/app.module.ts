@@ -1,3 +1,5 @@
+import { NgtUniversalModule } from '@ng-toolkit/universal';
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -32,7 +34,8 @@ import { MouseService } from './services/mouse.service';
     ModalFormUpdateComponent,
   ],
   imports: [
-    BrowserModule,
+    CommonModule,
+    NgtUniversalModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
@@ -41,7 +44,6 @@ import { MouseService } from './services/mouse.service';
   providers: [
     MouseService
   ],
-  bootstrap: [AppComponent],
   entryComponents: [
     ModalFormBuyComponent,
     ModalFormUpdateComponent,

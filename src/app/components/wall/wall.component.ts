@@ -1,4 +1,5 @@
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { WINDOW } from '@ng-toolkit/universal';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter , Inject} from '@angular/core';
 import { MouseService } from '../../services/mouse.service';
 import { Constants } from '../../constants';
 import { Slot } from '../../lib/slot';
@@ -110,7 +111,7 @@ export class WallComponent implements OnInit, OnChanges {
       }
     };
 
-  constructor(public _MouseService: MouseService) { }
+  constructor(@Inject(WINDOW) private window: Window, public _MouseService: MouseService) { }
 
   ngOnInit() {
     this._MouseService.mouseMove.subscribe((event) => {
@@ -160,7 +161,7 @@ export class WallComponent implements OnInit, OnChanges {
       if (!/^[a-z0-9]+:\/\//.test(url)) {
         url = 'http://' + slot.url;
       }
-      window.open(url);
+      this.window.open(url);
     } else if (this.isUpdating) {
       this.update.emit(slot);
     }

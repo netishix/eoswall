@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title, Meta } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import ScatterJS from 'scatter-js/dist/scatter.esm';
 import Eos from 'eosjs';
@@ -22,7 +23,7 @@ export class HomeComponent implements OnInit {
     isLoading: boolean,
     slots: Slot[],
     pixelsSold: number,
-    pixelPrice: number,
+    pixelPrice: Asset,
     isBuying: boolean,
     isUpdating: boolean,
   } = {
@@ -34,9 +35,16 @@ export class HomeComponent implements OnInit {
       isUpdating: false,
     };
 
-  constructor(public _NgbModal: NgbModal) { }
+  constructor(public _Title: Title, public _Meta: Meta, public _NgbModal: NgbModal) { }
 
   ngOnInit() {
+    this._Title.setTitle('Own a SLOT. Own a piece of History - The EOS Wall');
+    this._Meta.addTags([
+      { name: 'description', content: `The EOS Wall project was born as a proof of concept of EOSIO DAPP.
+      Every user that has an EOSIO account can buy a portion of the wall called slot.` },
+      { name: 'author', content: 'The EOS Wall' },
+      { name: 'keywords', content: 'EOS, wall, slot, buy, blockchain, dapp, proof of concept, scatter, million dollar homepage' }
+    ]);
     this.Constants = Constants;
     this.wall.isLoading = true;
     this.pullSlots()
@@ -77,7 +85,8 @@ export class HomeComponent implements OnInit {
       });
       const wallPixels = Constants.wall.wallWidth * Constants.wall.wallHeight;
       const slope = (this.wall.pixelsSold <= 800000) ? (0.0015 / wallPixels) : (0.003 / wallPixels);
-      this.wall.pixelPrice = (slope * this.wall.pixelsSold) + 0.0005;
+      const pixelPriceAmount = (slope * this.wall.pixelsSold) + 0.0005;
+      this.wall.pixelPrice = new Asset(pixelPriceAmount, Constants.network.symbol);
     });
   }
 

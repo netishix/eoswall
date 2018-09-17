@@ -35,7 +35,8 @@ export class Slot {
       bottom: (Constants.wall.wallHeight - this.c2[1]) + 'px',
     };
     if (settings.pixelPrice) {
-      const amount = settings.pixelPrice * this.pixels;
+      const pixelPrice: Asset = settings.pixelPrice;
+      const amount = pixelPrice.amount * this.pixels;
       this.price = new Asset(amount, Constants.network.symbol);
     }
   }
