@@ -1,6 +1,6 @@
 {
   "name": "eoswall",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "node local.js",
@@ -11,7 +11,7 @@
     "build:server:prod": "ng run eoswall:server && webpack --config webpack.server.config.js --progress --colors",
     "build:browser:prod": "ng build --prod",
     "build:prod": "npm run build:server:prod && npm run build:browser:prod",
-    "postinstall": "npm run build:prod"
+    "postinstall": "node patch.js && npm run build:prod"
   },
   "private": true,
   "dependencies": {
