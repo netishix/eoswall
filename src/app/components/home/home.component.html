@@ -1,5 +1,5 @@
 <div class="container py-5">
-	<div class="row mb-5">
+	<div class="row mb-4">
 		<div *ngIf="!wall.isBuying && !wall.isUpdating" class="col-12 mb-4">
 			<h3 class="text-muted text-center">
 				Own a
@@ -10,8 +10,9 @@
 		</div>
 		<div *ngIf="!wall.isLoading" class="col-12">
 			<div *ngIf="!wall.isBuying && !wall.isUpdating" class="text-center">
-				<button class="btn btn-success mr-4" (click)="wall.isBuying = true">Buy</button>
-				<button class="btn btn-success mr-4" (click)="wall.isUpdating = true">Update slot</button>
+				<button class="btn btn-success mb-2 mr-4" (click)="wall.isBuying = true">Buy</button>
+				<button class="btn btn-success mb-2 mr-4" (click)="wall.isUpdating = true">Update slot</button>
+				<button class="btn btn-success mb-2 mr-4" disabled>Trade (coming soon...)</button>
 			</div>
 			<div *ngIf="wall.isBuying">
 				<div class="d-flex justify-content-between align-items-center mb-4">

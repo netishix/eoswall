@@ -125,8 +125,8 @@ export class WallComponent implements OnInit, OnChanges {
   ngOnChanges(changes) {
     if (changes.isBuying && changes.isBuying.currentValue) {
       this.selection.slot = new Slot({
-        c1: [830, 70],
-        c2: [850, 90],
+        c1: [700, 70],
+        c2: [730, 90],
         pixelPrice: this.pixelPrice
       });
       this.selection.intersects = this.intersects(this.selection.slot.c1, this.selection.slot.c2);
