@@ -124,9 +124,10 @@ export class WallComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes) {
     if (changes.isBuying && changes.isBuying.currentValue) {
+      const initialCoordinates = this.findAvailableCoordinates();
       this.selection.slot = new Slot({
-        c1: [700, 70],
-        c2: [730, 90],
+        c1: initialCoordinates.c1,
+        c2: initialCoordinates.c2,
         pixelPrice: this.pixelPrice
       });
       this.selection.intersects = this.intersects(this.selection.slot.c1, this.selection.slot.c2);
@@ -149,6 +150,27 @@ export class WallComponent implements OnInit, OnChanges {
       c2: c2
     });
     return slot.pixels > (Constants.wall.maxOrderPixels * Constants.wall.maxOrderPixels);
+  }
+
+  private findAvailableCoordinates() {
+    const available = false;
+    let i = 0;
+    do {
+      const x1 = Math.floor(Math.random() * 1000) + 1;
+      const y1 = Math.floor(Math.random() * 500) + 1;
+      const c1 = [x1, y1];
+      const c2 = [x1 + 30, y1 + 20];
+      if (!this.intersects(c1, c2) && !this.exceeds(c1, c2)) {
+        return {c1, c2};
+      } else {
+        if (i >= 100) {
+          return {c1, c2};
+        } else {
+          i++;
+        }
+      }
+    }
+    while (!available);
   }
 
   public selectSlot(): void {
