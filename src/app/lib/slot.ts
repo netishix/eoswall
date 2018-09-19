@@ -1,5 +1,5 @@
 import { Constants } from '../constants';
-import { Coordinate } from '../types';
+import {  Coordinate } from '../types';
 import { Asset } from './asset';
 
 export class Slot {
@@ -23,7 +23,8 @@ export class Slot {
     this.c2 = settings.c2;
     this.title = settings.title || null;
     this.image = settings.image || null;
-    this.url = settings.url || null;
+    this.url = !/^[a-z0-9]+:\/\//.test(settings.url) ? 'http://' + settings.url : settings.url;
+    console.log(this.url);
     this.owner = settings.owner || null;
     this.width = this.c2[0] - this.c1[0];
     this.height = this.c2[1] - this.c1[1];

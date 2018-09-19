@@ -1,3 +1,4 @@
+
 <div id="app-wall-wrapper">
   <div id="app-wall" class="m-auto" [ngClass]="[isBuying?'cursor-crosshair':'',isLoading?'loading':'']">
     <div id="app-wall-selection" *ngIf="isBuying" [ngStyle]="selection.slot.cssPosition">
@@ -9,7 +10,7 @@
           Price: {{selection.slot.price.toString()}}
         </p>
         <button *ngIf="selection.intersects || selection.exceeded" class="btn btn-danger btn-block font-weight-bold" disabled>{{(selection.intersects) ? 'Slot is not available' : 'Slot is too big'}}</button>
-        <button *ngIf="!selection.intersects && !selection.exceeded" class="btn btn-success btn-block font-weight-bold" (click)="selectSlot()">Buy this slot</button>
+        <button *ngIf="!selection.intersects && !selection.exceeded" class="btn btn-success btn-block font-weight-bold" (click)="buySlot()">Buy this slot</button>
       </div>
       <div class="handle-m" (mousedown)="selection.mousedown = 'm'" [ngClass]="{'bg-danger':selection.intersects || selection.exceeded,'bg-info':!selection.intersects && !selection.exceeded}"></div>
       <div class="handle handle-tl bg-warning" (mousedown)="selection.mousedown = 'tl'"></div>
@@ -21,7 +22,8 @@
       <div class="handle handle-bl bg-warning" (mousedown)="selection.mousedown = 'bl'"></div>
       <div class="handle handle-l bg-warning" (mousedown)="selection.mousedown = 'l'"></div>
     </div>
-    <div *ngFor="let slot of slots" class="app-slot" [ngStyle]="slot.cssPosition" [style.backgroundImage]="'url('+slot.image+')'"
-      [ngClass]="[(isBuying)?'disabled-pointer-events':'',(isUpdating)?'app-slot-selected':'']" [ngbTooltip]="slot.title+' ('+slot.owner+')'" (click)="slotClick(slot)">
+    <div *ngFor="let slot of slots" class="app-slot" [ngStyle]="slot.cssPosition" [style.backgroundImage]="'url('+slot.image+')'" [ngClass]="[(isBuying)?'disabled-pointer-events':'']">
+      <a *ngIf="!isUpdating && !isBuying" class="app-slot-content" [href]="slot.url" [ngbTooltip]="slot.title+' ('+slot.owner+')'" target="_blank"></a>
+      <div *ngIf="isUpdating" class="app-slot-content app-slot-selected" (click)="updateSlot(slot)"></div>
     </div>
 </div>

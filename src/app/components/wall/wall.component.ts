@@ -175,20 +175,12 @@ export class WallComponent implements OnInit, OnChanges {
     while (!available);
   }
 
-  public selectSlot(): void {
+  public buySlot(): void {
     this.buy.emit(this.selection.slot);
   }
 
-  public slotClick(slot): void {
-    if (!this.isBuying && !this.isUpdating) {
-      let url = slot.url;
-      if (!/^[a-z0-9]+:\/\//.test(url)) {
-        url = 'http://' + slot.url;
-      }
-      this.window.open(url);
-    } else if (this.isUpdating) {
-      this.update.emit(slot);
-    }
+  public updateSlot(slot: Slot): void {
+    this.update.emit(slot);
   }
 
 }
