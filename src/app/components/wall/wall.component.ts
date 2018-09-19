@@ -1,5 +1,5 @@
 import { WINDOW } from '@ng-toolkit/universal';
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter , Inject} from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { MouseService } from '../../services/mouse.service';
 import { Constants } from '../../constants';
 import { Slot } from '../../lib/slot';
@@ -22,17 +22,17 @@ export class WallComponent implements OnInit, OnChanges {
   @Output() update: EventEmitter<Slot> = new EventEmitter();
 
   public selection: {
-      slot: Slot;
-      intersects: boolean;
-      exceeded: boolean;
-      mousedown: 'm' | 'tl' | 't' | 'tr' | 'r' | 'br' | 'b' | 'bl' | 'l';
-      moved: {
-        x: number,
-        y: number
-      };
-      onMouseMove: Function;
-      onMouseUp: Function;
-    } = {
+    slot: Slot;
+    intersects: boolean;
+    exceeded: boolean;
+    mousedown: 'm' | 'tl' | 't' | 'tr' | 'r' | 'br' | 'b' | 'bl' | 'l';
+    moved: {
+      x: number,
+      y: number
+    };
+    onMouseMove: Function;
+    onMouseUp: Function;
+  } = {
       slot: null,
       intersects: false,
       exceeded: false,
@@ -137,7 +137,7 @@ export class WallComponent implements OnInit, OnChanges {
   private intersects(c1, c2): boolean {
     const intersectedSlots = [];
     for (const slot of this.slots) {
-      if ( c1[0] < slot.c2[0] && c2[0] > slot.c1[0] && c1[1] < slot.c2[1] && c2[1] > slot.c1[1]) {
+      if (c1[0] < slot.c2[0] && c2[0] > slot.c1[0] && c1[1] < slot.c2[1] && c2[1] > slot.c1[1]) {
         intersectedSlots.push(slot);
       }
     }
@@ -156,15 +156,17 @@ export class WallComponent implements OnInit, OnChanges {
     const available = false;
     let i = 0;
     do {
-      const x1 = Math.floor(Math.random() * 1000) + 1;
-      const y1 = Math.floor(Math.random() * 500) + 1;
+      let x1 = Math.floor(Math.random() * 1000) + 1;
+      let y1 = Math.floor(Math.random() * 500) + 1;
+      x1 = Math.ceil(x1 / Constants.wall.minOrderPixels) * Constants.wall.minOrderPixels;
+      y1 = Math.ceil(y1 / Constants.wall.minOrderPixels) * Constants.wall.minOrderPixels;
       const c1 = [x1, y1];
       const c2 = [x1 + 30, y1 + 20];
       if (!this.intersects(c1, c2) && !this.exceeds(c1, c2)) {
-        return {c1, c2};
+        return { c1, c2 };
       } else {
         if (i >= 100) {
-          return {c1, c2};
+          return { c1, c2 };
         } else {
           i++;
         }
