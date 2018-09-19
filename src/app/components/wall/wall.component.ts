@@ -156,7 +156,7 @@ export class WallComponent implements OnInit, OnChanges {
     const available = false;
     let i = 0;
     do {
-      let x1 = Math.floor(Math.random() * 1000) + 1;
+      let x1 = Math.floor(Math.random() * 900) + 1;
       let y1 = Math.floor(Math.random() * 500) + 1;
       x1 = Math.ceil(x1 / Constants.wall.minOrderPixels) * Constants.wall.minOrderPixels;
       y1 = Math.ceil(y1 / Constants.wall.minOrderPixels) * Constants.wall.minOrderPixels;
