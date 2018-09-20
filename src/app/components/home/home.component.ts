@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Title, Meta } from '@angular/platform-browser';
+import {  Title, Meta } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import ScatterJS from 'scatter-js/dist/scatter.esm';
 import Eos from 'eosjs';
@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
     isLoading: boolean,
     slots: Slot[],
     pixelsSold: number,
-    pixelPrice: Asset,
+    pixelPrice: number,
     isBuying: boolean,
     isUpdating: boolean,
   } = {
@@ -40,7 +40,8 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this._Title.setTitle('Own a SLOT. Own a piece of History - The EOS Wall');
     this._Meta.addTags([
-      { name: 'description', content: `The EOS Wall project was born as a proof of concept of EOSIO DAPP.
+      {
+        name: 'description', content: `The EOS Wall project was born as a proof of concept of EOSIO DAPP.
       Every user that has an EOSIO account can buy a portion of the wall called slot.` },
       { name: 'author', content: 'The EOS Wall' },
       { name: 'keywords', content: 'EOS, wall, slot, buy, blockchain, dapp, proof of concept, scatter, million dollar homepage' }
@@ -67,26 +68,27 @@ export class HomeComponent implements OnInit {
       limit: 0
     }).then((response) => {
       const rawSlots = response.rows;
-      rawSlots.forEach((rawSlot) => {
-        const slot = new Slot({
-          id: rawSlot.id,
-          c1: [rawSlot.x1, rawSlot.y1],
-          c2: [rawSlot.x2, rawSlot.y2],
-          title: rawSlot.title,
-          image: rawSlot.image,
-          url: rawSlot.url,
-          owner: rawSlot.owner
-        });
-        this.wall.slots.push(slot);
-      });
+      let time = 1000;
       this.wall.pixelsSold = 0;
-      this.wall.slots.forEach((slot) => {
-        this.wall.pixelsSold += slot.pixels;
+      rawSlots.forEach((rawSlot) => {
+        time += 100;
+        setTimeout(() => {
+          const slot = new Slot({
+            id: rawSlot.id,
+            c1: [rawSlot.x1, rawSlot.y1],
+            c2: [rawSlot.x2, rawSlot.y2],
+            title: rawSlot.title,
+            image: rawSlot.image,
+            url: rawSlot.url,
+            owner: rawSlot.owner
+          });
+          this.wall.slots.push(slot);
+          this.wall.pixelsSold += slot.pixels;
+          const wallPixels = Constants.wall.wallWidth * Constants.wall.wallHeight;
+          const slope = (this.wall.pixelsSold <= 800000) ? (0.0015 / wallPixels) : (0.003 / wallPixels);
+          this.wall.pixelPrice = (slope * this.wall.pixelsSold) + 0.0005;
+        }, time);
       });
-      const wallPixels = Constants.wall.wallWidth * Constants.wall.wallHeight;
-      const slope = (this.wall.pixelsSold <= 800000) ? (0.0015 / wallPixels) : (0.003 / wallPixels);
-      const pixelPriceAmount = (slope * this.wall.pixelsSold) + 0.0005;
-      this.wall.pixelPrice = new Asset(pixelPriceAmount, Constants.network.symbol);
     });
   }
 
@@ -129,7 +131,11 @@ export class HomeComponent implements OnInit {
                   } else {
                     // calculate missing balance
                     const missingAmount = (slot.price.amount - balance.amount);
-                    debit = new Asset(missingAmount, Constants.network.symbol);
+                    if (missingAmount >= 0) {
+                      debit = new Asset(missingAmount, Constants.network.symbol);
+                    } else {
+                      return null;
+                    }
                   }
                 } else {
                   debit = slot.price;

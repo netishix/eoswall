@@ -6,8 +6,8 @@ class Asset {
   public symbol: Symbol;
 
   constructor(amount, symbol) {
-    this.amount = amount;
     this.symbol = symbol;
+    this.amount = amount.toFixed(this.symbol.precision);
   }
 
   public static fromString(input: string): Asset {
@@ -19,7 +19,7 @@ class Asset {
   }
 
   public toString(): string {
-    const output = `${this.amount.toFixed(this.symbol.precision)} ${this.symbol.name}`;
+    const output = `${this.amount} ${this.symbol.name}`;
     return output;
   }
 
