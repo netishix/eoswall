@@ -71,7 +71,7 @@ export class HomeComponent implements OnInit {
       let time = 1000;
       this.wall.pixelsSold = 0;
       rawSlots.forEach((rawSlot) => {
-        time += 100;
+        time += 50;
         setTimeout(() => {
           const slot = new Slot({
             id: rawSlot.id,
