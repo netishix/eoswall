@@ -10,7 +10,11 @@
 		</div>
 		<div *ngIf="!wall.isLoading" class="col-12">
 			<div *ngIf="!wall.isBuying && !wall.isUpdating" class="text-center">
-				<button class="btn btn-success mb-2 mr-4" (click)="wall.isBuying = true">Buy</button>
+				<p class="alert alert-warning">
+					<i class="fa fa-exclamation-triangle mr-2"></i>
+					Some users have reported issues while buying. New purchases have been disabled until the problem is fixed. <span class="font-weight-bold">Keep tuned</span>
+				</p>
+				<button class="btn btn-success mb-2 mr-4" (click)="wall.isBuying = true" disabled>Buy (disabled for maintenance)</button>
 				<button class="btn btn-success mb-2 mr-4" (click)="wall.isUpdating = true">Update slot</button>
 				<button class="btn btn-success mb-2 mr-4" disabled>Trade (coming soon...)</button>
 			</div>
