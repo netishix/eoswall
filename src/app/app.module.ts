@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
+import { GtagModule } from 'angular-gtag';
+
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -40,6 +42,8 @@ import { MouseService } from './services/mouse.service';
     ReactiveFormsModule,
     AppRoutingModule,
     NgbModule.forRoot(),
+    GtagModule.forRoot({ trackingId: 'UA-85714784-2', trackPageviews: true })
+
   ],
   providers: [
     MouseService
