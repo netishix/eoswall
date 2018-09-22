@@ -1,5 +1,5 @@
 import { Constants } from '../constants';
-import {  Coordinate } from '../types';
+import { Coordinate } from '../types';
 import { Asset } from './asset';
 
 export class Slot {
@@ -16,6 +16,13 @@ export class Slot {
   public image: string;
   public url: string;
   public owner: string;
+
+  static calculatePixelPrice(pixelsSold) {
+    const wallPixels = Constants.wall.wallWidth * Constants.wall.wallHeight;
+    const slope = (pixelsSold <= 800000) ? (0.0015 / wallPixels) : (0.003 / wallPixels);
+    const pixelPrice = (slope * pixelsSold) + 0.0005;
+    return pixelPrice;
+  }
 
   constructor(settings) {
     this.id = settings.id;
@@ -35,9 +42,13 @@ export class Slot {
       bottom: (Constants.wall.wallHeight - this.c2[1]) + 'px',
     };
     if (settings.pixelPrice) {
-      const amount = settings.pixelPrice * this.pixels;
-      this.price = new Asset(amount, Constants.network.symbol);
+      this.setPrice(settings.pixelPrice);
     }
+  }
+
+  public setPrice(pixelPrice): void {
+    const amount = pixelPrice * this.pixels;
+    this.price = new Asset(amount, Constants.network.symbol);
   }
 
   public areCoordinatesValid(): boolean {
