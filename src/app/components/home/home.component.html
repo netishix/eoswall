@@ -46,7 +46,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div *ngIf="!wall.isBuying && !wall.isUpdating" class="col-12 text-center border-bottom pb-1 mb-3">
+		<div *ngIf="!wall.isLoading && !wall.isBuying && !wall.isUpdating" class="col-12 text-center border-bottom pb-1 mb-3">
 			<span class="mr-3">
 				Pixels sold:
 				<span class="badge badge-secondary mr-1">{{wall.pixelsSold}} </span>
