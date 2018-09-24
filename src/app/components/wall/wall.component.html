@@ -1,5 +1,4 @@
 
-<div id="app-wall-wrapper">
   <div id="app-wall" class="m-auto" [ngClass]="[isBuying?'cursor-crosshair':'',isBuying || isUpdating? 'app-wall-active':'',isLoading?'loading':'']">
     <div id="app-wall-selection" *ngIf="isBuying" [ngStyle]="selection.slot.cssPosition">
       <div id="app-wall-selection-info" class="p-2 bg-white border rounded">
@@ -27,4 +26,3 @@
       <div *ngIf="isUpdating" class="app-slot-content app-slot-selected" (click)="updateSlot(slot)"></div>
     </div>
   </div>
-</div>

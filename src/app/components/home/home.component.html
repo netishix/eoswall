@@ -47,11 +47,13 @@
 	</div>
 	<div class="row">
 		<div *ngIf="!wall.isBuying && !wall.isUpdating" class="col-12 text-center border-bottom pb-1 mb-3">
-			<span class="mr-2">Pixels sold:
-				<span class="badge badge-secondary mr-2">{{wall.pixelsSold}}</span>
+			<span class="mr-3">
+				Pixels sold:
+				<span class="badge badge-secondary mr-1">{{wall.pixelsSold}} </span>
+				<span class="badge badge-secondary">{{wall.pixelsSold * 100 / 1000000}}% </span>
 			</span>
-			<span class="mr-2">Pixel price:
-				<span class="badge badge-secondary mr-2">{{wall.pixelPrice ? wall.pixelPrice.toFixed(4)+' EOS' : ''}}</span>
+			<span class="mr-3">Pixel price:
+				<span class="badge badge-secondary mr-3">{{wall.pixelPrice ? wall.pixelPrice.toFixed(4)+' EOS' : ''}}</span>
 			</span>
 			<span>
 				Having trouble? Contact us at
