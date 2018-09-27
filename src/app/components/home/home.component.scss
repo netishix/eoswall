@@ -45,7 +45,7 @@ hr{
 }
 
 .zoom-out{
-  zoom:0.4;
+  zoom:0.3;
   @include media-breakpoint-up(sm) {
     zoom:0.75;
   }
