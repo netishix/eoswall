@@ -19,6 +19,7 @@ import { Asset } from '../../lib/asset';
 export class HomeComponent implements OnInit {
 
   public Constants;
+  public showMenu: boolean;
   public wall: {
     isLoading: boolean,
     slots: Slot[],
@@ -47,6 +48,7 @@ export class HomeComponent implements OnInit {
       { name: 'keywords', content: 'EOS, wall, slot, buy, blockchain, dapp, proof of concept, scatter, million dollar homepage' }
     ]);
     this.Constants = Constants;
+    this.showMenu = true;
     this.wall.isLoading = true;
     this.pullSlots()
       .finally((response) => {
@@ -108,6 +110,27 @@ export class HomeComponent implements OnInit {
       return true;
     });
   }
+
+  public enableBuy() {
+    this.wall.isBuying = true;
+    this.showMenu = false;
+  }
+
+  public disableBuy() {
+    this.wall.isBuying = false;
+    this.showMenu = true;
+  }
+
+  public enableUpdate() {
+    this.wall.isUpdating = true;
+    this.showMenu = false;
+  }
+
+  public disableUpdate() {
+    this.wall.isUpdating = false;
+    this.showMenu = true;
+  }
+
 
   public onBuy(slot: Slot) {
   this.wall.isLoading = true;
@@ -179,7 +202,7 @@ export class HomeComponent implements OnInit {
               modalSuccess.componentInstance.type = 'success';
               modalSuccess.componentInstance.title = 'Great purchase!';
               modalSuccess.componentInstance.description = 'The slot was assigned to your account';
-              this.wall.isBuying = false;
+              this.disableBuy();
             })
             .catch(error => {
               console.log(error);
@@ -243,7 +266,7 @@ export class HomeComponent implements OnInit {
               modalSuccess.componentInstance.type = 'success';
               modalSuccess.componentInstance.title = 'All right!';
               modalSuccess.componentInstance.description = 'The slot was updated successfully';
-              this.wall.isUpdating = false;
+              this.disableUpdate();
             })
             .catch(error => {
               console.log(error);

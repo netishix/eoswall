@@ -1,68 +1,73 @@
-<div class="container py-5">
-	<div class="row mb-4">
-		<div *ngIf="!wall.isBuying && !wall.isUpdating" class="col-12 mb-4">
-			<h3 class="text-muted text-center">
-				Own a
-				<span class="font-weight-bold">SLOT</span>. Own a piece of
-				<span class="font-weight-bold">HISTORY</span>.
-			</h3>
-			<hr>
-		</div>
-		<div *ngIf="!wall.isLoading" class="col-12">
-			<div *ngIf="!wall.isBuying && !wall.isUpdating" class="text-center">
-				<button class="btn btn-success mb-2 mr-4" (click)="wall.isBuying = true">Buy</button>
-				<button class="btn btn-success mb-2 mr-4" (click)="wall.isUpdating = true">Update slot</button>
-				<button class="btn btn-success mb-2 mr-4" disabled>Trade (coming soon...)</button>
-			</div>
-			<div *ngIf="wall.isBuying">
-				<div class="d-flex justify-content-between align-items-center mb-4">
-					<hr>
-					<button class="btn btn-secondary mr-2" (click)="wall.isBuying = false">
-						<i class="fas fa-times mr-2"></i>
-						<span>Disable buy mode</span>
-					</button>
-					<hr>
-				</div>
-				<h4 class="text-center">
-					Select the slot you want to buy
-				</h4>
-			</div>
-			<div *ngIf="wall.isUpdating">
-				<div class="d-flex justify-content-center align-items-center mb-4">
-					<hr>
-					<button class="btn btn-secondary mr-2" (click)="wall.isUpdating = false">
-						<i class="fas fa-times mr-2"></i>
-						<span>Disable update mode</span>
-					</button>
-					<hr>
-				</div>
-				<h4 class="text-center">
-					Select the slot you want to update
-				</h4>
-			</div>
-		</div>
-		<div *ngIf="wall.isLoading" class="col-12 text-center">
-			<i class="fas fa-circle-notch fa-spin mr-2"></i>Loading...
+<div class="container pt-2 pb-5">
+	<div class="row">
+		<div class="col-12" [ngClass]="[(wall.isBuying || wall.isUpdating)? 'zoom-in':'zoom-out']">
+			<app-wall [isLoading]="wall.isLoading" [slots]="wall.slots" [pixelPrice]="wall.pixelPrice" [isBuying]="wall.isBuying" (buy)="onBuy($event)"
+			 [isUpdating]="wall.isUpdating" (update)="onUpdate($event)"></app-wall>
 		</div>
 	</div>
-	<div class="row">
-		<div *ngIf="!wall.isLoading && !wall.isBuying && !wall.isUpdating" class="col-12 text-center border-bottom pb-1 mb-3">
-			<span class="mr-3">
+</div>
+
+<div id="app-menu" class="row p-2 d-none d-lg-block rounded border" [ngClass]="{'app-menu-hide':!showMenu}">
+	<button id="app-menu-btn-hide" class="btn btn-secondary btn-sm" [disabled]="wall.isBuying || wall.isUpdating" (click)="showMenu = !showMenu">
+		<span *ngIf="showMenu">
+			<i class="fas fa-chevron-right"></i>
+		</span>
+		<span *ngIf="!showMenu">
+			<i class="fas fa-chevron-left"></i>
+		</span>
+	</button>
+	<div *ngIf="!wall.isLoading" class="col-12 mb-2">
+		<div class="text-center text-nowrap">
+			<button class="btn btn-success mb-2 mr-2" (click)="enableBuy();">Buy</button>
+			<button class="btn btn-success mb-2 mr-2" (click)="enableUpdate();">Update</button>
+			<button class="btn btn-success mb-2 mr-2" disabled>Trade (soon...)</button>
+		</div>
+		<ul class="list-unstyled">
+			<li>
 				Pixels sold:
 				<span class="badge badge-secondary mr-1">{{wall.pixelsSold}} </span>
 				<span class="badge badge-secondary">{{wall.pixelsSold * 100 / 1000000}}% </span>
-			</span>
-			<span class="mr-3">Pixel price:
+			</li>
+			<li>
+				Pixel price:
 				<span class="badge badge-secondary mr-3">{{wall.pixelPrice ? wall.pixelPrice.toFixed(4)+' EOS' : ''}}</span>
-			</span>
-			<span>
+			</li>
+			<hr>
+			<li>
 				Having trouble? Contact us at
 				<span class="font-weight-bold">support@eoswall.io</span>
-			</span>
+			</li>
+		</ul>
+	</div>
+	<div *ngIf="wall.isLoading" class="col-12 text-center">
+		<i class="fas fa-circle-notch fa-spin mr-2"></i>Loading...
+	</div>
+</div>
+<div *ngIf="wall.isBuying || wall.isUpdating" id="app-disable-modes" class="p-4">
+	<div *ngIf="wall.isBuying">
+		<h5 class="text-center mb-4">
+			Select the slot you want to buy
+		</h5>
+		<div class="d-flex justify-content-center align-items-center mb-2">
+			<hr>
+			<button class="btn btn-secondary mr-2" (click)="disableBuy()">
+				<i class="fas fa-times mr-2"></i>
+				<span>Disable buy mode</span>
+			</button>
+			<hr>
 		</div>
-		<div class="col-12">
-			<app-wall [isLoading]="wall.isLoading" [slots]="wall.slots" [pixelPrice]="wall.pixelPrice" [isBuying]="wall.isBuying" (buy)="onBuy($event)" [isUpdating]="wall.isUpdating"
-			 (update)="onUpdate($event)"></app-wall>
+	</div>
+	<div *ngIf="wall.isUpdating">
+		<h5 class="text-center mb-4">
+			Click the slot you want to update
+		</h5>
+		<div class="d-flex justify-content-center align-items-center mb-2">
+			<hr>
+			<button class="btn btn-secondary mr-2" (click)="disableUpdate()">
+				<i class="fas fa-times mr-2"></i>
+				<span>Disable update mode</span>
+			</button>
+			<hr>
 		</div>
 	</div>
 </div>
