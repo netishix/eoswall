@@ -19,7 +19,6 @@ import { Asset } from '../../lib/asset';
 export class HomeComponent implements OnInit {
 
   public Constants;
-  public showMenu: boolean;
   public wall: {
     isLoading: boolean,
     slots: Slot[],
@@ -48,7 +47,6 @@ export class HomeComponent implements OnInit {
       { name: 'keywords', content: 'EOS, wall, slot, buy, blockchain, dapp, proof of concept, scatter, million dollar homepage' }
     ]);
     this.Constants = Constants;
-    this.showMenu = true;
     this.wall.isLoading = true;
     this.pullSlots()
       .finally((response) => {
@@ -113,22 +111,18 @@ export class HomeComponent implements OnInit {
 
   public enableBuy() {
     this.wall.isBuying = true;
-    this.showMenu = false;
   }
 
   public disableBuy() {
     this.wall.isBuying = false;
-    this.showMenu = true;
   }
 
   public enableUpdate() {
     this.wall.isUpdating = true;
-    this.showMenu = false;
   }
 
   public disableUpdate() {
     this.wall.isUpdating = false;
-    this.showMenu = true;
   }
 
 

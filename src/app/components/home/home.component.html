@@ -1,4 +1,32 @@
-<div class="container pt-2 pb-5">
+<div class="container py-4">
+	<div class="row">
+		<div class="col-12">
+			<div *ngIf="!wall.isLoading" class="col-12 text-center mb-3">
+				<div class="text-center d-none d-lg-block mb-3" *ngIf="!wall.isBuying && !wall.isUpdating">
+					<button class="btn btn-success mr-2" (click)="enableBuy();">Buy</button>
+					<button class="btn btn-success mr-2" (click)="enableUpdate();">Update slot</button>
+					<button class="btn btn-success mr-2" disabled>Trade (soon...)</button>
+					<hr>
+				</div>
+				<span class="mr-3">
+					Pixels sold:
+					<span class="badge badge-secondary mr-1">{{wall.pixelsSold}} </span>
+					<span class="badge badge-secondary">{{wall.pixelsSold * 100 / 1000000}}% </span>
+				</span>
+				<span class="mr-3">
+					Pixel price:
+					<span class="badge badge-secondary">{{wall.pixelPrice ? wall.pixelPrice.toFixed(4)+' EOS' : ''}}</span>
+				</span>
+				<span>
+					Having trouble? Contact us at
+					<span class="font-weight-bold">support@eoswall.io</span>
+				</span>
+			</div>
+			<div *ngIf="wall.isLoading" class="col-12 text-center mb-3">
+				<i class="fas fa-circle-notch fa-spin mr-2"></i>Loading...
+			</div>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-12" [ngClass]="[(wall.isBuying || wall.isUpdating)? 'zoom-in':'zoom-out']">
 			<app-wall [isLoading]="wall.isLoading" [slots]="wall.slots" [pixelPrice]="wall.pixelPrice" [isBuying]="wall.isBuying" (buy)="onBuy($event)"
@@ -7,42 +35,6 @@
 	</div>
 </div>
 
-<div id="app-menu" class="row p-2 d-none d-lg-block rounded border" [ngClass]="{'app-menu-hide':!showMenu}">
-	<button id="app-menu-btn-hide" class="btn btn-secondary btn-sm" [disabled]="wall.isBuying || wall.isUpdating" (click)="showMenu = !showMenu">
-		<span *ngIf="showMenu">
-			<i class="fas fa-chevron-right"></i>
-		</span>
-		<span *ngIf="!showMenu">
-			<i class="fas fa-chevron-left"></i>
-		</span>
-	</button>
-	<div *ngIf="!wall.isLoading" class="col-12 mb-2">
-		<div class="text-center text-nowrap">
-			<button class="btn btn-success mb-2 mr-2" (click)="enableBuy();">Buy</button>
-			<button class="btn btn-success mb-2 mr-2" (click)="enableUpdate();">Update</button>
-			<button class="btn btn-success mb-2 mr-2" disabled>Trade (soon...)</button>
-		</div>
-		<ul class="list-unstyled">
-			<li>
-				Pixels sold:
-				<span class="badge badge-secondary mr-1">{{wall.pixelsSold}} </span>
-				<span class="badge badge-secondary">{{wall.pixelsSold * 100 / 1000000}}% </span>
-			</li>
-			<li>
-				Pixel price:
-				<span class="badge badge-secondary mr-3">{{wall.pixelPrice ? wall.pixelPrice.toFixed(4)+' EOS' : ''}}</span>
-			</li>
-			<hr>
-			<li>
-				Having trouble? Contact us at
-				<span class="font-weight-bold">support@eoswall.io</span>
-			</li>
-		</ul>
-	</div>
-	<div *ngIf="wall.isLoading" class="col-12 text-center">
-		<i class="fas fa-circle-notch fa-spin mr-2"></i>Loading...
-	</div>
-</div>
 <div *ngIf="wall.isBuying || wall.isUpdating" id="app-disable-modes" class="p-4">
 	<div *ngIf="wall.isBuying">
 		<h5 class="text-center mb-4">
