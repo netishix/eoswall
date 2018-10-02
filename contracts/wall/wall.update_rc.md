@@ -14,4 +14,4 @@ Input parameters:
 INTENT. The intent of the {{ update }} action is to update the title, image and url of a slot.
 
 ### Term
-TERM. In order to update the slot data, the user must own the slot. Ram fee is payed by the contract.
+TERM. In order to update the slot data, the user must own the slot or be the owner of the contract. Ram fee is payed by the contract.

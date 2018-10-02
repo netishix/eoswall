@@ -54,7 +54,7 @@ public:
     eosio_assert(is_account(buyer), "The buyer account is not valid.");
     eosio_assert(areCoordinatesValid(c1, c2), "The slot is not valid.");
     eosio_assert(isSlotDataValid(title, image, url), "The slot data is invalid. Check: Title[0-60] - Image[0-300] - Url[0-300]");
-    eosio_assert(!intersects(c1, c2), "The slot is not available because it intersects with another slot.");
+    // eosio_assert(!intersects(c1, c2), "The slot is not available because it intersects with another slot.");
 
     auto slotPrice = calculatePrice(c1, c2);
     debit(buyer, slotPrice);
@@ -82,13 +82,36 @@ public:
     auto iterator = slots.find(id);
     eosio_assert(iterator != slots.end(), "The slot does not exist.");
     auto slot = slots.get(id);
-    require_auth(slot.owner);
+    eosio_assert(has_auth(slot.owner) || has_auth(_self), "Invalid authorization");
     slots.modify(iterator, _self, [&](auto &slot) {
       slot.title = title;
       slot.image = image;
       slot.url = url;
       slot.owner = owner;
     });
+  }
+
+   /// @abi action
+  void erase(uint64_t id){
+    require_auth(_self);
+    slotIndex slots(_self, _self);
+    auto iterator = slots.find(id);
+    eosio_assert(iterator != slots.end(), "The slot does not exist.");
+    slots.erase(iterator);
+    eosio_assert(iterator != slots.end(), "The slot was not erased propertly.");
+  }
+
+    /// @abi action
+  void refund(account_name to){
+    require_auth(_self);
+    accountIndex accounts(_self, to);
+    auto account = accounts.get(to);
+    debit(account.account, account.balance);
+    action(
+            permission_level{ _self, N(active) },
+            N(eosio.token), N(transfer),
+            make_tuple(_self, account.account, account.balance, std::string("The EOS Wall - Refund"))
+         ).send();
   }
 
   /// @abi action
@@ -110,7 +133,7 @@ private:
     auto iterator = accounts.find(from);
     eosio_assert(iterator != accounts.end(), "Debit: Account was not found.");
     auto account = accounts.get(from);
-    eosio_assert(account.balance >= quantity, "Debit: Insufficient balance.");
+    eosio_assert(account.balance >= quantity, "Debit: Insufficient balance");
     accounts.modify(iterator, _self, [&](auto &account) {
       account.balance -= quantity;
     });
@@ -214,4 +237,4 @@ private:
     }                                                                                                                    \
   }
 
-EOSIO_ABI(wall, (buy)(update)(transfer));
+EOSIO_ABI(wall, (buy)(update)(erase)(refund)(transfer));
