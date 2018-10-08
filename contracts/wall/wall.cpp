@@ -1,4 +1,4 @@
-#include <wall/wall.hpp>
+#include "wall.hpp"
 
 using namespace eosio;
 using namespace std;
@@ -13,8 +13,7 @@ public:
   const uint64_t minOrderPixels = 10;
   const uint64_t maxOrderPixels = 100;
 
-  /// @abi table account
-  struct Account
+  struct [[eosio::table]] Account
   {
     account_name account;
     asset balance;
@@ -23,8 +22,7 @@ public:
   };
   typedef multi_index<N(account), Account> accountIndex;
 
-  /// @abi table slot
-  struct Slot
+  struct [[eosio::table]] Slot
   {
     uint64_t id;
     uint64_t x1;
@@ -42,7 +40,7 @@ public:
   };
   typedef multi_index<N(slot), Slot> slotIndex;
 
-  /// @abi action
+  [[eosio::action]]
   void buy(
       uint64_t x1, uint64_t y1,
       uint64_t x2, uint64_t y2,
@@ -74,8 +72,9 @@ public:
     });
   }
 
-  /// @abi action
-  void update(uint64_t id, string title, string image, string url, account_name owner){
+  [[eosio::action]]
+  void update(uint64_t id, string title, string image, string url, account_name owner)
+  {
     eosio_assert(isSlotDataValid(title, image, url), "The slot data is invalid. Check: Title[0-60] - Image[0-300] - Url[0-300]");
     eosio_assert(is_account(owner), "The new owner account is not valid.");
     slotIndex slots(_self, _self);
@@ -91,8 +90,9 @@ public:
     });
   }
 
-   /// @abi action
-  void erase(uint64_t id){
+  [[eosio::action]]
+  void erase(uint64_t id)
+  {
     require_auth(_self);
     slotIndex slots(_self, _self);
     auto iterator = slots.find(id);
@@ -101,32 +101,44 @@ public:
     eosio_assert(iterator != slots.end(), "The slot was not erased propertly.");
   }
 
-    /// @abi action
-  void refund(account_name to){
+  [[eosio::action]]
+  void refund(account_name to)
+  {
     require_auth(_self);
     accountIndex accounts(_self, to);
     auto account = accounts.get(to);
     debit(account.account, account.balance);
     action(
-            permission_level{ _self, N(active) },
-            N(eosio.token), N(transfer),
-            make_tuple(_self, account.account, account.balance, std::string("The EOS Wall - Refund"))
-         ).send();
+        permission_level{_self, N(active)},
+        N(eosio.token), N(transfer),
+        make_tuple(_self, account.account, account.balance, std::string("The EOS Wall - Refund")))
+        .send();
   }
 
-  /// @abi action
-  void transfer(uint64_t sender, uint64_t receiver){
-    auto transferData = unpack_action_data<currency::transfer>();
-    if(transferData.from == _self || transferData.to != _self){
+  [[eosio::action]]
+  void broadcast(account_name account, string message)
+  {
+    require_auth(_self);
+    require_recipient(account);
+  }
+
+
+
+
+  /*Auxiliary contract methods*/
+
+    void onTransfer(account_name from, account_name to, eosio::asset quantity, std::string memo)
+  {
+    if (from == _self || to != _self)
+    {
       return;
     }
-    eosio_assert(transferData.quantity.symbol == string_to_symbol(4, "EOS"), "Only EOS is accepted.");
-    eosio_assert(transferData.quantity.is_valid(), "Invalid token transfer.");
-    eosio_assert(transferData.quantity.amount > 0, "Quantity must be positive.");
-    deposit(transferData.from, transferData.quantity);
+    eosio_assert(quantity.symbol == string_to_symbol(4, "EOS"), "Only EOS is accepted.");
+    eosio_assert(quantity.is_valid(), "Invalid token transfer.");
+    eosio_assert(quantity.amount > 0, "Quantity must be positive.");
+    deposit(from, quantity);
   }
 
-private:
   void debit(account_name from, asset quantity)
   {
     accountIndex accounts(_self, from);
@@ -142,11 +154,14 @@ private:
   {
     accountIndex accounts(_self, to);
     auto iterator = accounts.find(to);
-    if (iterator != accounts.end()){
+    if (iterator != accounts.end())
+    {
       accounts.modify(iterator, _self, [&](auto &account) {
         account.balance += quantity;
       });
-    } else {
+    }
+    else
+    {
       accounts.emplace(_self, [&](auto &account) {
         account.account = to;
         account.balance = quantity;
@@ -154,19 +169,23 @@ private:
     }
   }
 
-  uint64_t getWidth(coordinate c1, coordinate c2){
+  uint64_t getWidth(coordinate c1, coordinate c2)
+  {
     return c2[0] - c1[0];
   }
 
-  uint64_t getHeight(coordinate c1, coordinate c2){
+  uint64_t getHeight(coordinate c1, coordinate c2)
+  {
     return c2[1] - c1[1];
   }
 
-  uint64_t getTotalPixels(coordinate c1, coordinate c2){
+  uint64_t getTotalPixels(coordinate c1, coordinate c2)
+  {
     return getWidth(c1, c2) * getHeight(c1, c2);
   }
 
-  asset calculatePrice(coordinate c1, coordinate c2){
+  asset calculatePrice(coordinate c1, coordinate c2)
+  {
     uint64_t pixelsSold = 0;
     slotIndex slots(_self, _self);
     for (auto &slot : slots)
@@ -182,7 +201,8 @@ private:
     return price;
   }
 
-  bool intersects(coordinate c1, coordinate c2){
+  bool intersects(coordinate c1, coordinate c2)
+  {
     slotIndex slots(_self, _self);
     for (auto &slot : slots)
     {
@@ -194,7 +214,8 @@ private:
     return false;
   }
 
-  bool areCoordinatesValid(coordinate c1, coordinate c2){
+  bool areCoordinatesValid(coordinate c1, coordinate c2)
+  {
     // is c2 > c1 ?
     bool condition1 = (c2[0] > c1[0] && c2[1] > c1[1]);
     // is inside wall ?
@@ -207,34 +228,39 @@ private:
     return valid;
   }
 
-  bool isSlotDataValid(string title, string image, string url){
+  bool isSlotDataValid(string title, string image, string url)
+  {
     bool valid = (title.length() <= 60 && image.length() <= 300 & url.length() <= 300);
     return valid;
   }
+
+   // Catches any action apply
+        void apply(account_name contract, action_name act) {
+             if (contract == N(eosio.token) && act == N(transfer)) {
+                 struct transfer_t {
+                    account_name from;
+                    account_name to;
+                    eosio::asset quantity;
+                    std::string memo;
+                } t = eosio::unpack_action_data<transfer_t>();
+                onTransfer(t.from,t.to,t.quantity,t.memo);
+                return;
+              }
+              if (contract != _self) return;
+              // needed for EOSIO_API macro
+              auto &thiscontract = *this;
+              switch (act) {
+                // first argument is name of CPP class, not contract
+                EOSIO_API(wall, (buy)(update)(erase)(refund)(broadcast))
+              };
+        }
 };
 
-#undef EOSIO_ABI // redefine the macro under the official macro name in order to use eosiocpp abi generator tool
-#define EOSIO_ABI(TYPE, MEMBERS)                                                                                         \
-  extern "C"                                                                                                             \
-  {                                                                                                                      \
-    void apply(uint64_t receiver, uint64_t code, uint64_t action)                                                        \
-    {                                                                                                                    \
-      if (action == N(onerror))                                                                                          \
-      {                                                                                                                  \
-        /* onerror is only valid if it is for the "eosio" code account and authorized by "eosio"'s "active permission */ \
-        eosio_assert(code == N(eosio), "onerror action's are only valid from the \"eosio\" system account");             \
-      }                                                                                                                  \
-      auto self = receiver;                                                                                              \
-      if (code == self || code == N(eosio.token) || action == N(onerror))                                                \
-      {                                                                                                                  \
-        TYPE thiscontract(self);                                                                                         \
-        switch (action)                                                                                                  \
-        {                                                                                                                \
-          EOSIO_API(TYPE, MEMBERS)                                                                                       \
-        }                                                                                                                \
-        /* does not allow destructor of thiscontract to run: eosio_exit(0); */                                           \
-      }                                                                                                                  \
-    }                                                                                                                    \
-  }
-
-EOSIO_ABI(wall, (buy)(update)(erase)(refund)(transfer));
+extern "C" { \
+   void apply( uint64_t receiver, uint64_t code, uint64_t action ) { \
+        auto self = receiver; \
+        wall w(receiver);\
+        w.apply(code, action); \
+        eosio_exit(0);\
+   } \
+} \

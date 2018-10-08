@@ -20,6 +20,7 @@ const Constants = {
 };
 
 /*
+
 const Constants = {
   network: {
     blockchain: 'eos',
