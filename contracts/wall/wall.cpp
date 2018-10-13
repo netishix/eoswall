@@ -13,6 +13,15 @@ public:
   const uint64_t minOrderPixels = 10;
   const uint64_t maxOrderPixels = 100;
 
+  struct [[eosio::table]] Global
+  {
+    uint64_t id;
+    uint64_t pixelsSold;
+    uint64_t primary_key() const { return id; }
+    EOSLIB_SERIALIZE(Global, (id)(pixelsSold));
+  };
+  typedef multi_index<N(global), Global> globalIndex;
+
   struct [[eosio::table]] Account
   {
     account_name account;
@@ -40,20 +49,16 @@ public:
   };
   typedef multi_index<N(slot), Slot> slotIndex;
 
-  [[eosio::action]]
-  void buy(
+  [[eosio::action]] void buy(
       uint64_t x1, uint64_t y1,
       uint64_t x2, uint64_t y2,
-      string title, string image, string url, account_name buyer)
-  {
+      string title, string image, string url, account_name buyer) {
     require_auth(buyer);
     coordinate c1 = {x1, y1};
     coordinate c2 = {x2, y2};
     eosio_assert(is_account(buyer), "The buyer account is not valid.");
     eosio_assert(areCoordinatesValid(c1, c2), "The slot is not valid.");
     eosio_assert(isSlotDataValid(title, image, url), "The slot data is invalid. Check: Title[0-60] - Image[0-300] - Url[0-300]");
-    // eosio_assert(!intersects(c1, c2), "The slot is not available because it intersects with another slot.");
-
     auto slotPrice = calculatePrice(c1, c2);
     debit(buyer, slotPrice);
     slotIndex slots(_self, _self);
@@ -70,19 +75,23 @@ public:
       slot.time = now();
       slot.owner = buyer;
     });
+    globalIndex global(_self, _self);
+    auto globalItr = global.find(0);
+    global.modify(globalItr, _self, [&](auto &global) {
+      global.pixelsSold += getTotalPixels(c1, c2);
+    });
   }
 
-  [[eosio::action]]
-  void update(uint64_t id, string title, string image, string url, account_name owner)
+      [[eosio::action]] void update(uint64_t id, string title, string image, string url, account_name owner)
   {
     eosio_assert(isSlotDataValid(title, image, url), "The slot data is invalid. Check: Title[0-60] - Image[0-300] - Url[0-300]");
     eosio_assert(is_account(owner), "The new owner account is not valid.");
     slotIndex slots(_self, _self);
-    auto iterator = slots.find(id);
-    eosio_assert(iterator != slots.end(), "The slot does not exist.");
+    auto slotItr = slots.find(id);
+    eosio_assert(slotItr != slots.end(), "The slot does not exist.");
     auto slot = slots.get(id);
     eosio_assert(has_auth(slot.owner) || has_auth(_self), "Invalid authorization");
-    slots.modify(iterator, _self, [&](auto &slot) {
+    slots.modify(slotItr, _self, [&](auto &slot) {
       slot.title = title;
       slot.image = image;
       slot.url = url;
@@ -90,20 +99,45 @@ public:
     });
   }
 
-  [[eosio::action]]
-  void erase(uint64_t id)
-  {
+  [[eosio::action]] void erase(uint64_t id) {
     require_auth(_self);
     slotIndex slots(_self, _self);
-    auto iterator = slots.find(id);
-    eosio_assert(iterator != slots.end(), "The slot does not exist.");
-    slots.erase(iterator);
-    eosio_assert(iterator != slots.end(), "The slot was not erased propertly.");
+    auto slot = slots.get(id);
+    coordinate c1 = {slot.x1, slot.y1};
+    coordinate c2 = {slot.x2, slot.y2};
+    uint64_t slotTotalPixels = getTotalPixels(c1, c2);
+    globalIndex global(_self, _self);
+    auto globalItr = global.find(0);
+    global.modify(globalItr, _self, [&](auto &global) {
+      global.pixelsSold -= slotTotalPixels;
+    });
+    auto slotItr = slots.find(id);
+    eosio_assert(slotItr != slots.end(), "The slot does not exist.");
+    slots.erase(slotItr);
+    eosio_assert(slotItr != slots.end(), "The slot was not erased propertly.");
   }
 
-  [[eosio::action]]
-  void refund(account_name to)
+  [[eosio::action]] void setglobal(uint64_t pixelsSold)
   {
+    require_auth(_self);
+    globalIndex global(_self, _self);
+    auto globalItr = global.find(0);
+    if (globalItr != global.end())
+    {
+      global.modify(globalItr, _self, [&](auto &global) {
+        global.pixelsSold = pixelsSold;
+      });
+    }
+    else
+    {
+      global.emplace(_self, [&](auto &global) {
+        global.id = 0;
+        global.pixelsSold = pixelsSold;
+      });
+    }
+  }
+
+  [[eosio::action]] void refund(account_name to) {
     require_auth(_self);
     accountIndex accounts(_self, to);
     auto account = accounts.get(to);
@@ -115,19 +149,15 @@ public:
         .send();
   }
 
-  [[eosio::action]]
-  void broadcast(account_name account, string message)
+      [[eosio::action]] void broadcast(account_name account, string message)
   {
     require_auth(_self);
     require_recipient(account);
   }
 
-
-
-
   /*Auxiliary contract methods*/
 
-    void onTransfer(account_name from, account_name to, eosio::asset quantity, std::string memo)
+  void onTransfer(account_name from, account_name to, eosio::asset quantity, std::string memo)
   {
     if (from == _self || to != _self)
     {
@@ -142,21 +172,21 @@ public:
   void debit(account_name from, asset quantity)
   {
     accountIndex accounts(_self, from);
-    auto iterator = accounts.find(from);
-    eosio_assert(iterator != accounts.end(), "Debit: Account was not found.");
+    auto accountItr = accounts.find(from);
+    eosio_assert(accountItr != accounts.end(), "Debit: Account was not found.");
     auto account = accounts.get(from);
     eosio_assert(account.balance >= quantity, "Debit: Insufficient balance");
-    accounts.modify(iterator, _self, [&](auto &account) {
+    accounts.modify(accountItr, _self, [&](auto &account) {
       account.balance -= quantity;
     });
   }
   void deposit(account_name to, asset quantity)
   {
     accountIndex accounts(_self, to);
-    auto iterator = accounts.find(to);
-    if (iterator != accounts.end())
+    auto accountItr = accounts.find(to);
+    if (accountItr != accounts.end())
     {
-      accounts.modify(iterator, _self, [&](auto &account) {
+      accounts.modify(accountItr, _self, [&](auto &account) {
         account.balance += quantity;
       });
     }
@@ -186,32 +216,14 @@ public:
 
   asset calculatePrice(coordinate c1, coordinate c2)
   {
-    uint64_t pixelsSold = 0;
-    slotIndex slots(_self, _self);
-    for (auto &slot : slots)
-    {
-      coordinate iC1 = {slot.x1, slot.y1};
-      coordinate iC2 = {slot.x2, slot.y2};
-      pixelsSold += getTotalPixels(iC1, iC2);
-    }
+    globalIndex global(_self, _self);
+    auto stats = global.get(0);
+    uint64_t pixelsSold = stats.pixelsSold;
     float slope = (pixelsSold <= 800000) ? (0.0015 / (width * height)) : (0.003 / (width * height));
     float pixelPrice = slope * pixelsSold + 0.0005;
     float value = (pixelPrice * getTotalPixels(c1, c2)) * 10000;
     asset price = asset(value, S(4, EOS));
     return price;
-  }
-
-  bool intersects(coordinate c1, coordinate c2)
-  {
-    slotIndex slots(_self, _self);
-    for (auto &slot : slots)
-    {
-      if (c1[0] < slot.x2 && c2[0] > slot.x1 && c1[1] < slot.y2 && c2[1] > slot.y1)
-      {
-        return true;
-      }
-    }
-    return false;
   }
 
   bool areCoordinatesValid(coordinate c1, coordinate c2)
@@ -234,33 +246,46 @@ public:
     return valid;
   }
 
-   // Catches any action apply
-        void apply(account_name contract, action_name act) {
-             if (contract == N(eosio.token) && act == N(transfer)) {
-                 struct transfer_t {
-                    account_name from;
-                    account_name to;
-                    eosio::asset quantity;
-                    std::string memo;
-                } t = eosio::unpack_action_data<transfer_t>();
-                onTransfer(t.from,t.to,t.quantity,t.memo);
-                return;
-              }
-              if (contract != _self) return;
-              // needed for EOSIO_API macro
-              auto &thiscontract = *this;
-              switch (act) {
-                // first argument is name of CPP class, not contract
-                EOSIO_API(wall, (buy)(update)(erase)(refund)(broadcast))
-              };
-        }
+  // Catches any action apply
+  void apply(account_name contract, action_name act)
+  {
+    if ( (contract == N(eosio.token) && act == N(transfer)) || (contract == N(cryptopesosc) && act == N(transfer)) )
+    {
+      struct transfer_t
+      {
+        account_name from;
+        account_name to;
+        eosio::asset quantity;
+        std::string memo;
+      } t = eosio::unpack_action_data<transfer_t>();
+      asset quantity;
+      if(contract == N(eosio.token)) {
+        quantity = t.quantity;
+      }else if(contract == N(cryptopesosc)){
+        quantity = asset(t.quantity.amount / 2000, S(4, EOS));
+      }
+      onTransfer(t.from, t.to, quantity, t.memo);
+      return;
+    }
+    if (contract != _self)
+      return;
+    // needed for EOSIO_API macro
+    auto &thiscontract = *this;
+    switch (act)
+    {
+      // first argument is name of CPP class, not contract
+      EOSIO_API(wall, (buy)(update)(erase)(setglobal)(refund)(broadcast))
+    };
+  }
 };
 
-extern "C" { \
-   void apply( uint64_t receiver, uint64_t code, uint64_t action ) { \
-        auto self = receiver; \
-        wall w(receiver);\
-        w.apply(code, action); \
-        eosio_exit(0);\
-   } \
-} \
+extern "C"
+{
+  void apply(uint64_t receiver, uint64_t code, uint64_t action)
+  {
+    auto self = receiver;
+    wall w(receiver);
+    w.apply(code, action);
+    eosio_exit(0);
+  }
+}\

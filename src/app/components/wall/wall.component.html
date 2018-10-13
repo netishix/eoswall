@@ -5,8 +5,8 @@
         <p class="text-center">
           {{selection.slot.width}}x{{selection.slot.height}} at position {{selection.slot.c1[0]}},{{selection.slot.c1[1]}} ({{selection.slot.pixels}} px) 
         </p>
-        <p class="font-weight-bold text-center">
-          Price: {{selection.slot.price.toString()}}
+        <p class="text-center">
+          <span class="font-weight-bold text-primary">{{selection.slot.eosPrice.toString()}}</span> | <span class="font-weight-bold text-primary">{{selection.slot.psoPrice.toString()}}</span>
         </p>
         <button *ngIf="selection.intersects || selection.exceeded" class="btn btn-danger btn-block font-weight-bold" disabled>{{(selection.intersects) ? 'Slot is not available' : 'Slot is too big'}}</button>
         <button *ngIf="!selection.intersects && !selection.exceeded" class="btn btn-success btn-block font-weight-bold" (click)="buySlot()">Buy this slot</button>

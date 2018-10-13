@@ -11,7 +11,8 @@ export class Slot {
   public height: number;
   public pixels: number;
   public cssPosition: { left: string, top: string, right: string, bottom: string };
-  public price: Asset;
+  public eosPrice: Asset;
+  public psoPrice: Asset;
   public title: string;
   public image: string;
   public url: string;
@@ -48,7 +49,8 @@ export class Slot {
 
   public setPrice(pixelPrice): void {
     const amount = pixelPrice * this.pixels;
-    this.price = new Asset(amount, Constants.network.symbol);
+    this.eosPrice = new Asset(amount, {name: 'EOS', precision: 4});
+    this.psoPrice = new Asset(amount * Constants.network.currency.PSO.relation, Constants.network.currency.PSO.symbol);
   }
 
   public areCoordinatesValid(): boolean {

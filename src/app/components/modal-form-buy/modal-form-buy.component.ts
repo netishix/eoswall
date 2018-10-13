@@ -23,10 +23,12 @@ export class ModalFormBuyComponent implements OnInit {
         image: [null, Validators.compose([Validators.required, Validators.maxLength(300)])],
         url: [null, Validators.compose([Validators.required, Validators.maxLength(300)])]
       }),
-      submit: () => {
+      submit: (currency) => {
         this.slotForm.isSubmitted = true;
         if (this.slotForm.formGroup.valid) {
-          this._NgbActiveModal.close(this.slotForm.formGroup.value);
+          const formValue = this.slotForm.formGroup.value;
+          formValue.currency = currency;
+          this._NgbActiveModal.close(formValue);
         }
       }
     };

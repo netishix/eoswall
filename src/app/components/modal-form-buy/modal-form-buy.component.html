@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-    <form [formGroup]="slotForm.formGroup" (submit)="slotForm.submit()" class="col-12">
+    <form [formGroup]="slotForm.formGroup" class="col-12">
       <div class="row form-group">
         <label class="col-12 col-lg-3 col-form-label text-lg-right font-weight-bold">Title:</label>
         <input class="col-12 col-lg-6 form-control" formControlName="title" placeholder="(visible when mouse is over the slot)">
@@ -39,12 +39,11 @@
             <div class="offset-4 pl-0 col-lg-8">
               <div *ngIf="slotForm.formGroup.controls.image.errors && (slotForm.formGroup.controls.image.errors.maxlength || slotForm.formGroup.controls.image.errors.required) && (this.slotForm.formGroup.controls.image.touched || this.slotForm.isSubmitted)"
                 class="small text-danger font-weight-bold">Please, use an url with up to 300 characters</div>
-                <div *ngIf="slotForm.formGroup.controls.image.errors && slotForm.formGroup.controls.image.errors.notFound && (this.slotForm.formGroup.controls.image.touched || this.slotForm.isSubmitted)"
+              <div *ngIf="slotForm.formGroup.controls.image.errors && slotForm.formGroup.controls.image.errors.notFound && (this.slotForm.formGroup.controls.image.touched || this.slotForm.isSubmitted)"
                 class="small text-danger font-weight-bold">The image could not be fetched. Please check the url
               </div>
-                <div *ngIf="slotForm.formGroup.controls.image.errors && slotForm.formGroup.controls.image.errors.invalidSize && (this.slotForm.formGroup.controls.image.touched || this.slotForm.isSubmitted)"
-                class="small text-danger font-weight-bold">The image should have {{slot.width}}x{{slot.height}} pixels to fit properly inside the
-                slot
+              <div *ngIf="slotForm.formGroup.controls.image.errors && slotForm.formGroup.controls.image.errors.invalidSize && (this.slotForm.formGroup.controls.image.touched || this.slotForm.isSubmitted)"
+                class="small text-danger font-weight-bold">The image should have {{slot.width}}x{{slot.height}} pixels to fit properly inside the slot
               </div>
             </div>
           </div>
@@ -64,24 +63,33 @@
       </div>
       <div class="row my-4 py-4 border-top border-bottom">
         <div class="col-12">
-          <div class="row mb-2">
+          <div class="row mb-4">
             <label class="col-12 col-lg-3 col-form-label text-lg-right font-weight-bold">DESCRIPTION:</label>
             <input class="col-12 col-lg-6 form-control-plaintext px-0" [value]="slot.width+'x'+slot.height+' pixels at position '+slot.c1[0]+','+slot.c1[1]+' ('+slot.pixels+' pixels)'">
           </div>
           <h4 class="row mb-2">
-              <label class="col-12 col-lg-3 col-form-label text-lg-right font-weight-bold">TOTAL:</label>
-              <input class="col-12 col-lg-8 form-control-plaintext px-0 font-weight-bold" [value]="slot.price.toString()">
-            </h4>
-          </div>
+            <div class="col-12 col-lg-3 text-lg-right font-weight-bold">TOTAL:</div>
+            <div class="col-12 col-lg-8 px-0">
+              <span class="font-weight-bold text-primary">{{slot.eosPrice.toString()}}</span>
+              |
+              <span class="font-weight-bold text-primary">{{slot.psoPrice.toString()}}</span>
+            </div>
+          </h4>
+        </div>
       </div>
       <div class="row form-group justify-content-center">
         <div class="col-12 col-lg-10 text-center">
           <div class="d-flex justify-content-between">
             <button class="btn btn-secondary" type="button" (click)="_NgbActiveModal.dismiss('canceled')">Cancel</button>
-            <button class="btn btn-info" [disabled]="!hasScatterInstalled">
-              <span class="mr-2">Continue with Scatter</span>
-              <i class="fas fa-chevron-right"></i>
-            </button>
+            <div ngbDropdown class="d-inline-block" placement="bottom-right">
+              <button id="payment-method" ngbDropdownToggle class="btn btn-primary" [disabled]="!hasScatterInstalled">
+                Continue with Scatter
+              </button>
+              <div ngbDropdownMenu aria-labelledby="payment-method">
+                <button (click)="slotForm.submit('EOS')" type="button" class="btn dropdown-item">Pay with EOS<i class="fas fa-chevron-right ml-2"></i></button>
+                <button (click)="slotForm.submit('PSO')" type="button" class="btn dropdown-item">Pay with PSO<i class="fas fa-chevron-right ml-2"></i></button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

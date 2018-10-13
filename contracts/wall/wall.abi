@@ -1,5 +1,5 @@
 {
-    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Mon Oct  8 01:17:49 2018",
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Sat Oct 13 07:41:19 2018",
     "version": "eosio::abi/1.0",
     "structs": [
         {
@@ -13,6 +13,20 @@
                 {
                     "name": "balance",
                     "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "Global",
+            "base": "",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "pixelsSold",
+                    "type": "uint64"
                 }
             ]
         },
@@ -139,6 +153,16 @@
             ]
         },
         {
+            "name": "setglobal",
+            "base": "",
+            "fields": [
+                {
+                    "name": "pixelsSold",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
             "name": "update",
             "base": "",
             "fields": [
@@ -188,6 +212,11 @@
             "ricardian_contract": ""
         },
         {
+            "name": "setglobal",
+            "type": "setglobal",
+            "ricardian_contract": ""
+        },
+        {
             "name": "update",
             "type": "update",
             "ricardian_contract": ""
@@ -197,6 +226,13 @@
         {
             "name": "account",
             "type": "Account",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "global",
+            "type": "Global",
             "index_type": "i64",
             "key_names": [],
             "key_types": []
