@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import ScatterJS from 'scatter-js/dist/scatter.esm';
+import ScatterJS from 'scatterjs-core';
+import ScatterEOS from 'scatterjs-plugin-eosjs';
 import Eos from 'eosjs';
 import { ModalFormBuyComponent } from '../modal-form-buy/modal-form-buy.component';
 import { ModalFormUpdateComponent } from '../modal-form-update/modal-form-update.component';
@@ -65,7 +66,7 @@ export class HomeComponent implements OnInit {
       scope: Constants.network.code,
       table: 'slot',
       json: true,
-      limit: 0
+      limit: -1
     })
       .then((slotTable) => {
         const rawSlots = slotTable.rows;
@@ -86,7 +87,7 @@ export class HomeComponent implements OnInit {
           scope: Constants.network.code,
           table: 'global',
           json: true,
-          limit: 0
+          limit: -1
         });
       })
       .then((globalTable) => {

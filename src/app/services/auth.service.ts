@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import ScatterJS from 'scatter-js/dist/scatter.esm';
+import ScatterJS from 'scatterjs-core';
 import { Constants } from '../constants';
 
 @Injectable({
