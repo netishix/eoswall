@@ -10,8 +10,8 @@
                 <p>
                   The EOS Wall project was born as a proof of concept of EOS DAPP.
                   <br> Every user that has an EOS account can buy a portion of the wall called
-                  <span class="font-weight-bold">slot</span>. A slot is composed by a title, an image and an url to redirect when the slot is clicked.
-                  <br> All the slots are stored in the EOS blockchain and can be updated at anytime by it's owners.
+                  <span class="fw-bold">slot</span>. A slot is composed by a title, an image and an url to redirect when the slot is clicked.
+                  <br> All the slots are stored in the EOS blockchain and can be updated at anytime by its owners.
                 </p>
               </ng-template>
             </ngb-panel>
@@ -20,10 +20,10 @@
                 <p>
                   The price of a slot is calculated with the following formula:
                   <br>
-                  <span class="font-weight-bold">
-                    <span class="badge badge-primary">Slot price</span> =
-                    <span class="badge badge-info">Pixel price</span> x
-                    <span class="badge badge-info">Slot pixels</span>
+                  <span class="fw-bold">
+                    <span class="badge bg-primary">Slot price</span> =
+                    <span class="badge bg-info">Pixel price</span> x
+                    <span class="badge bg-info">Slot pixels</span>
                   </span>
                 </p>
                 <hr>
@@ -32,22 +32,22 @@
                   functions:
                 </p>
                 <ul>
-                    <li class="font-weight-bold mb-4">
+                    <li class="fw-bold mb-4">
                       When, sold pixels <= 800,000 pixels, then:
                       <br>
-                      <span class="badge badge-primary">Pixel price</span> =
-                      <span class="badge badge-info">0.0015 EOS</span> /
-                      <span class="badge badge-info">1,000,000 pixels</span> x
-                      <span class="badge badge-info">Pixels sold</span> +
-                      <span class="badge badge-info">0.0005 EOS</span>
+                      <span class="badge bg-primary">Pixel price</span> =
+                      <span class="badge bg-info">0.0015 EOS</span> /
+                      <span class="badge bg-info">1,000,000 pixels</span> x
+                      <span class="badge bg-info">Pixels sold</span> +
+                      <span class="badge bg-info">0.0005 EOS</span>
                     </li>
-                    <li class="font-weight-bold"> When, sold pixels > 800,000 pixels, then:
+                    <li class="fw-bold"> When, sold pixels > 800,000 pixels, then:
                       <br>
-                      <span class="badge badge-primary">Pixel price</span> =
-                      <span class="badge badge-info">0.003 EOS</span> /
-                      <span class="badge badge-info">1,000,000 pixels</span> x
-                      <span class="badge badge-info">Pixels sold</span> +
-                      <span class="badge badge-info">0.0005 EOS</span>
+                      <span class="badge bg-primary">Pixel price</span> =
+                      <span class="badge bg-info">0.003 EOS</span> /
+                      <span class="badge bg-info">1,000,000 pixels</span> x
+                      <span class="badge bg-info">Pixels sold</span> +
+                      <span class="badge bg-info">0.0005 EOS</span>
                     </li>
                   </ul>
               </ng-template>
@@ -71,19 +71,19 @@
                 <p>The smart contract has the following structure. For more information please refer to the Ricardian Contracts
                   attached to the smart contract.</p>
                 <ul>
-                  <li class="font-weight-bold mb-2">
-                    <span class="mr-2">Contract:</span>
-                    <span class="badge badge-info">{{Constants.network.code}}</span>
+                  <li class="fw-bold mb-2">
+                    <span class="me-2">Contract:</span>
+                    <span class="badge bg-info">{{Constants.network.code}}</span>
                   </li>
-                  <li class="font-weight-bold mb-2">
-                    <span class="mr-2">Tables:</span>
-                    <span class="badge badge-info mr-2">slot ({{Constants.network.code}} scope)</span>
-                    <span class="badge badge-info">account (account scope)</span>
+                  <li class="fw-bold mb-2">
+                    <span class="me-2">Tables:</span>
+                    <span class="badge bg-info me-2">slot ({{Constants.network.code}} scope)</span>
+                    <span class="badge bg-info">account (account scope)</span>
                   </li>
-                  <li class="font-weight-bold mb-2">
-                    <span class="mr-2">Public actions:</span>
-                    <span class="badge badge-info mr-2">buy</span>
-                    <span class="badge badge-info">update</span>
+                  <li class="fw-bold mb-2">
+                    <span class="me-2">Public actions:</span>
+                    <span class="badge bg-info me-2">buy</span>
+                    <span class="badge bg-info">update</span>
                   </li>
                 </ul>
               </ng-template>

@@ -5,11 +5,13 @@
         <p class="text-center">
           {{selection.slot.width}}x{{selection.slot.height}} at position {{selection.slot.c1[0]}},{{selection.slot.c1[1]}} ({{selection.slot.pixels}} px)
         </p>
-        <p class="font-weight-bold text-center">
+        <p class="fw-bold text-center">
           Price: {{selection.slot.price?.toString()}}
         </p>
-        <button *ngIf="selection.intersects || selection.exceeded" class="btn btn-danger btn-block font-weight-bold" disabled>{{(selection.intersects) ? 'Slot is not available' : 'Slot is too big'}}</button>
-        <button *ngIf="!selection.intersects && !selection.exceeded" class="btn btn-success btn-block font-weight-bold" (click)="buySlot()">Buy this slot</button>
+        <div class="d-grid">
+          <button *ngIf="selection.intersects || selection.exceeded" class="btn btn-danger fw-bold" disabled>{{(selection.intersects) ? 'Slot is not available' : 'Slot is too big'}}</button>
+          <button *ngIf="!selection.intersects && !selection.exceeded" class="btn btn-success fw-bold" (click)="buySlot()">Buy this slot</button>
+        </div>
       </div>
       <div class="handle-m" (mousedown)="selection.mousedown = 'm'" [ngClass]="{'bg-danger':selection.intersects || selection.exceeded,'bg-info':!selection.intersects && !selection.exceeded}"></div>
       <div class="handle handle-tl bg-warning" (mousedown)="selection.mousedown = 'tl'"></div>

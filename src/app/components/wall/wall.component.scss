@@ -26,7 +26,7 @@
     animation: Animation 2s ease infinite;
 }
 
-#app-wall.loading > #app-wall-selection, 
+#app-wall.loading > #app-wall-selection,
 #app-wall.loading > .app-slot {
   display: none;
 }
@@ -42,7 +42,7 @@
     50%{background-position:91% 100%}
     100%{background-position:10% 0%}
 }
-@keyframes Animation { 
+@keyframes Animation {
     0%{background-position:10% 0%}
     50%{background-position:91% 100%}
     100%{background-position:10% 0%}
@@ -55,7 +55,7 @@
   margin:0;
   z-index:1;
   background-repeat:no-repeat;
-  background-color:#fff;
+  background-color: #000000;
   cursor: pointer;
   kit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
   -moz-animation: fadein 1s; /* Firefox < 16 */
@@ -115,7 +115,7 @@
   -moz-user-select: none;
   -webkit-user-drag: none;
   -webkit-user-select: none;
-  -ms-user-select: none;  
+  -ms-user-select: none;
 }
 
 #app-wall-selection-info{

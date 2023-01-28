@@ -10,7 +10,7 @@ import { ModalFormUpdateComponent } from '../modal-form-update/modal-form-update
 import { ModalNotificationComponent } from '../modal-notification/modal-notification.component';
 import { Constants } from '../../constants';
 import { Slot } from '../../lib/slot';
-import * as SlotsSourceJson from '../../data/slots.json';
+import Slots from '../../data/slots.json';
 
 @Component({
   selector: 'app-home',
@@ -58,8 +58,7 @@ export class HomeComponent implements OnInit {
   public pullSlots(): Promise<boolean>{
     return new Promise((res) => {
       this.wall.slots = [];
-      const rawSlots = SlotsSourceJson;
-      rawSlots.forEach((rawSlot) => {
+      Slots.forEach((rawSlot) => {
         const slot = new Slot({
           id: rawSlot.id,
           c1: [rawSlot.x1, rawSlot.y1],

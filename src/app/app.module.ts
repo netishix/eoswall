@@ -18,7 +18,7 @@ import { WhyComponent } from './components/why/why.component';
 import { FaqComponent } from './components/faq/faq.component';
 
 import { MouseService } from './services/mouse.service';
-import {WindowRef} from "./services/window-ref.service";
+import { WindowRef } from "./services/window-ref.service";
 
 
 @NgModule({
@@ -45,6 +45,7 @@ import {WindowRef} from "./services/window-ref.service";
   providers: [
     WindowRef,
     MouseService
-  ]
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
