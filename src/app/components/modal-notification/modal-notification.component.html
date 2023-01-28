@@ -1,0 +1,16 @@
+<div class="modal-body p-0">
+  <button type="button" class="close m-2" aria-label="Close" (click)="_NgbActiveModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <div id="app-notification-header" class="text-white text-center p-4" [ngClass]="{'bg-success':type === 'success','bg-danger':type === 'danger','bg-warning':type === 'warning'}">
+    <i class="fas fa-7x" [ngClass]="{'fa-check-circle':type === 'success','fa-times-circle':type === 'danger','fa-exclamation-triangle':type === 'warning'}"></i>
+  </div>
+  <div class="text-center p-4">
+    <div class="mb-4">
+      <h4 class="text-muted">{{title}}</h4>
+      <h6 class="text-muted">{{description}}</h6>
+    </div>
+    <hr>
+    <button type="button" class="btn" (click)="_NgbActiveModal.close()" [ngClass]="{'btn-outline-success':type === 'success','btn-outline-danger':type === 'danger','btn-outline-warning':type === 'warning'}">Ok</button>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<div class="modal-header">
+  <h4 class="modal-title">Buy slot</h4>
+  <button type="button" class="close" aria-label="Close" (click)="_NgbActiveModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div *ngIf="!hasScatterInstalled" class="col-12 mb-4">
+      <div class="alert alert-danger mb-0">
+        <div class="row justify-content-center">
+          <h1 class="mr-4">
+            <i class="fas fa-exclamation-circle"></i>
+          </h1>
+          <div>
+            You don't have Scatter extension installed. To buy a slot please install Scatter
+            <br> Don't know how to install Scatter? You can download it
+            <a href="https://chrome.google.com/webstore/detail/scatter/ammjpmhgckkpcamddpolhchgomcojkle" target="_blank">here</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form [formGroup]="slotForm.formGroup" (submit)="slotForm.submit()" class="col-12">
+      <div class="row form-group">
+        <label class="col-12 col-lg-3 col-form-label text-lg-right font-weight-bold">Title:</label>
+        <input class="col-12 col-lg-6 form-control" formControlName="title" placeholder="(visible when mouse is over the slot)">
+        <div class="offset-3 pl-0 col-lg-9">
+          <div *ngIf="!slotForm.formGroup.controls['title'].valid && (this.slotForm.formGroup.controls['title'].touched || this.slotForm.isSubmitted)"
+            class="small text-danger font-weight-bold">Please, choose a title with up to 60 characters</div>
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-12 col-lg-9">
+          <div class="row">
+            <label class="col-12 col-lg-4 col-form-label text-lg-right font-weight-bold">Image url:</label>
+            <input class="col-6 col-lg-8 form-control" formControlName="image" placeholder="(eg: wwww.mywebsite.com/myimage.jpg)">
+          </div>
+          <div class="row">
+            <div class="offset-4 pl-0 col-lg-8">
+              <div *ngIf="slotForm.formGroup.controls['image'].errors && (slotForm.formGroup.controls['image'].errors['maxlength'] || slotForm.formGroup.controls['image'].errors['required']) && (this.slotForm.formGroup.controls['image'].touched || this.slotForm.isSubmitted)"
+                class="small text-danger font-weight-bold">Please, use an url with up to 300 characters</div>
+                <div *ngIf="slotForm.formGroup.controls['image'].errors && slotForm.formGroup.controls['image'].errors['notFound'] && (this.slotForm.formGroup.controls['image'].touched || this.slotForm.isSubmitted)"
+                class="small text-danger font-weight-bold">The image could not be fetched. Please check the url
+              </div>
+                <div *ngIf="slotForm.formGroup.controls['image'].errors && slotForm.formGroup.controls['image'].errors['invalidSize'] && (this.slotForm.formGroup.controls['image'].touched || this.slotForm.isSubmitted)"
+                class="small text-danger font-weight-bold">The image should have {{slot.width}}x{{slot.height}} pixels to fit properly inside the
+                slot
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-2 col-lg-2 text-center">
+          <p *ngIf="!slotForm.formGroup.value.image">Preview...</p>
+          <img *ngIf="slotForm.formGroup.value.image" class="img-fluid" [src]="slotForm.formGroup.value.image">
+        </div>
+      </div>
+      <div class="row form-group mb-4">
+        <label class="col-12 col-lg-3 col-form-label text-lg-right font-weight-bold">Redirect url:</label>
+        <input class="col-12 col-lg-8 form-control" formControlName="url" placeholder="(where to redirect when a click is made on the slot)">
+        <div class="offset-3 pl-0 col-lg-9">
+          <div *ngIf="!slotForm.formGroup.controls['url'].valid && (this.slotForm.formGroup.controls['url'].touched || this.slotForm.isSubmitted)"
+            class="small text-danger font-weight-bold">Please, use an url with up to 300 characters</div>
+        </div>
+      </div>
+      <div class="row my-4 py-4 border-top border-bottom">
+        <div class="col-12">
+          <div class="row mb-2">
+            <label class="col-12 col-lg-3 col-form-label text-lg-right font-weight-bold">DESCRIPTION:</label>
+            <input class="col-12 col-lg-6 form-control-plaintext px-0" [value]="slot.width+'x'+slot.height+' pixels at position '+slot.c1[0]+','+slot.c1[1]+' ('+slot.pixels+' pixels)'">
+          </div>
+          <h4 class="row mb-2">
+              <label class="col-12 col-lg-3 col-form-label text-lg-right font-weight-bold">TOTAL:</label>
+              <input class="col-12 col-lg-8 form-control-plaintext px-0 font-weight-bold" [value]="slot.price?.toString()">
+            </h4>
+          </div>
+      </div>
+      <div class="row form-group justify-content-center">
+        <div class="col-12 col-lg-10 text-center">
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-secondary" type="button" (click)="_NgbActiveModal.dismiss('canceled')">Cancel</button>
+            <button class="btn btn-info" [disabled]="!hasScatterInstalled">
+              <span class="mr-2">Continue with Scatter</span>
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,250 @@
+{
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Sat Oct 13 07:41:19 2018",
+    "version": "eosio::abi/1.0",
+    "structs": [
+        {
+            "name": "Account",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "balance",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "Global",
+            "base": "",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "pixelsSold",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "Slot",
+            "base": "",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "x1",
+                    "type": "uint64"
+                },
+                {
+                    "name": "y1",
+                    "type": "uint64"
+                },
+                {
+                    "name": "x2",
+                    "type": "uint64"
+                },
+                {
+                    "name": "y2",
+                    "type": "uint64"
+                },
+                {
+                    "name": "title",
+                    "type": "string"
+                },
+                {
+                    "name": "image",
+                    "type": "string"
+                },
+                {
+                    "name": "url",
+                    "type": "string"
+                },
+                {
+                    "name": "price",
+                    "type": "asset"
+                },
+                {
+                    "name": "time",
+                    "type": "uint64"
+                },
+                {
+                    "name": "owner",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "broadcast",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "message",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "buy",
+            "base": "",
+            "fields": [
+                {
+                    "name": "x1",
+                    "type": "uint64"
+                },
+                {
+                    "name": "y1",
+                    "type": "uint64"
+                },
+                {
+                    "name": "x2",
+                    "type": "uint64"
+                },
+                {
+                    "name": "y2",
+                    "type": "uint64"
+                },
+                {
+                    "name": "title",
+                    "type": "string"
+                },
+                {
+                    "name": "image",
+                    "type": "string"
+                },
+                {
+                    "name": "url",
+                    "type": "string"
+                },
+                {
+                    "name": "buyer",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "erase",
+            "base": "",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "refund",
+            "base": "",
+            "fields": [
+                {
+                    "name": "to",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "setglobal",
+            "base": "",
+            "fields": [
+                {
+                    "name": "pixelsSold",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "update",
+            "base": "",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "title",
+                    "type": "string"
+                },
+                {
+                    "name": "image",
+                    "type": "string"
+                },
+                {
+                    "name": "url",
+                    "type": "string"
+                },
+                {
+                    "name": "owner",
+                    "type": "name"
+                }
+            ]
+        }
+    ],
+    "types": [],
+    "actions": [
+        {
+            "name": "broadcast",
+            "type": "broadcast",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "buy",
+            "type": "buy",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "erase",
+            "type": "erase",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "refund",
+            "type": "refund",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "setglobal",
+            "type": "setglobal",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "update",
+            "type": "update",
+            "ricardian_contract": ""
+        }
+    ],
+    "tables": [
+        {
+            "name": "account",
+            "type": "Account",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "global",
+            "type": "Global",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "slot",
+            "type": "Slot",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        }
+    ],
+    "ricardian_clauses": [],
+    "abi_extensions": []
+}

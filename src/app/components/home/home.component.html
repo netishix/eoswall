@@ -1,0 +1,64 @@
+<div class="container py-4">
+	<div class="row">
+		<div class="col-12">
+			<div *ngIf="!wall.isLoading" class="col-12 text-center mb-3">
+
+				<div class="text-center d-none d-lg-block mb-3" *ngIf="!wall.isBuying && !wall.isUpdating">
+					<button class="btn btn-success mr-2" (click)="enableBuy();">Buy</button>
+					<button class="btn btn-success mr-2" (click)="enableUpdate();">Update slot</button>
+					<hr>
+				</div>
+
+				<span *ngIf="wall.pixelsSold" class="mr-3">
+					Pixels sold:
+					<span class="badge badge-secondary mr-1">{{wall.pixelsSold}} </span>
+					<span class="badge badge-secondary">{{wall.pixelsSold * 100 / 1000000}}% </span>
+				</span>
+
+				<span class="mr-3">
+					Pixel price:
+					<span class="badge badge-secondary">{{wall.pixelPrice ? wall.pixelPrice.toFixed(4)+' EOS' : ''}}</span>
+				</span>
+
+			</div>
+			<div *ngIf="wall.isLoading" class="col-12 text-center mb-3">
+				<i class="fas fa-circle-notch fa-spin mr-2"></i>Loading...
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12" [ngClass]="[(wall.isBuying || wall.isUpdating)? 'zoom-in':'zoom-out']">
+			<app-wall [isLoading]="wall.isLoading" [slots]="wall.slots" [pixelPrice]="wall.pixelPrice" [isBuying]="wall.isBuying" (buy)="onBuy($event)"
+			 [isUpdating]="wall.isUpdating" (update)="onUpdate($event)"></app-wall>
+		</div>
+	</div>
+</div>
+
+<div *ngIf="wall.isBuying || wall.isUpdating" id="app-disable-modes" class="p-4">
+	<div *ngIf="wall.isBuying">
+		<h5 class="text-center mb-4">
+			Select the slot you want to buy
+		</h5>
+		<div class="d-flex justify-content-center align-items-center mb-2">
+			<hr>
+			<button class="btn btn-secondary mr-2" (click)="disableBuy()">
+				<i class="fas fa-times mr-2"></i>
+				<span>Disable buy mode</span>
+			</button>
+			<hr>
+		</div>
+	</div>
+	<div *ngIf="wall.isUpdating">
+		<h5 class="text-center mb-4">
+			Click the slot you want to update
+		</h5>
+		<div class="d-flex justify-content-center align-items-center mb-2">
+			<hr>
+			<button class="btn btn-secondary mr-2" (click)="disableUpdate()">
+				<i class="fas fa-times mr-2"></i>
+				<span>Disable update mode</span>
+			</button>
+			<hr>
+		</div>
+	</div>
+</div>
