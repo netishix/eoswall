@@ -1,27 +1,53 @@
-# EosWallUpdate
+# The EOS Wall
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.3.
+## ¿What is The EOS Wall?
 
-## Development server
+The EOS Wall project was born as a proof of concept of EOS DAPP.
+Every user that has an EOS account can buy a portion of the wall called
+**slot** A slot is composed by a title, an image and an url to redirect when the slot is clicked.
+All the slots are stored in the EOS blockchain and can be updated at anytime by its owners.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## ¿How is the price calculated?
 
-## Code scaffolding
+The price of a slot is calculated with the following formula:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+__Slot price = Pixel price x Slot pixels__
 
-## Build
+The pixel price will change over time automatically depending on the total pixels that had been sold. It is calculated with the following lineal
+functions:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+When, sold pixels <= 800,000 pixels, then:
 
-## Running unit tests
+__Pixel price = 0.0015 EOS / 1,000,000 pixels x Pixels sold + 0.0005 EOS__
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+When, sold pixels > 800,000 pixels, then:
 
-## Running end-to-end tests
+__Pixel price</span> = 0.003 EOS / 1,000,000 pixels x Pixels sold + 0.0005 EOS__
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## ¿Who pays for RAM?
 
-## Further help
+The RAM for every new slot stored in the wall is payed by the smart contract itself.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## ¿Can I trust the external links?
+
+No, you can't. This app is not responsible for the content of external sites referenced by the slots.
+However, we make our best to constantly moderate the slots. Any slot considered malicious will be removed from the wall.
+
+## ¿Where can I find the smart contract?
+
+The smart contract has the following structure. For more information please refer to the Ricardian Contracts
+attached to the smart contract.
+
+### Contract: __eosisrocking__
+
+### Tables:  
+* __slot__ (eosisrocking scope)
+* __account__ (account scope)
+
+### Public actions:
+* __buy__
+* __update__
+
+## ¿Why do I need Scatter to buy a slot?
+
+To buy or update a slot, it is necessary to interact with the EOS blockchain. Scatter extension has the ability to interact with the blockchain by pushing and signing transactions safely using your browser.
