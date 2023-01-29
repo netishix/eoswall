@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "eos-wall-update": {
+    "eos-wall": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/eos-wall-update/browser",
+            "outputPath": "dist/eos-wall/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -42,8 +42,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "3mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -68,10 +68,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "eos-wall-update:build:production"
+              "browserTarget": "eos-wall:build:production"
             },
             "development": {
-              "browserTarget": "eos-wall-update:build:development"
+              "browserTarget": "eos-wall:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -79,7 +79,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "eos-wall-update:build"
+            "browserTarget": "eos-wall:build"
           }
         },
         "test": {
@@ -104,7 +104,7 @@
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist/eos-wall-update/server",
+            "outputPath": "dist/eos-wall/server",
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json",
             "inlineStyleLanguage": "scss"
@@ -126,12 +126,12 @@
           "builder": "@nguniversal/builders:ssr-dev-server",
           "configurations": {
             "development": {
-              "browserTarget": "eos-wall-update:build:development",
-              "serverTarget": "eos-wall-update:server:development"
+              "browserTarget": "eos-wall:build:development",
+              "serverTarget": "eos-wall:server:development"
             },
             "production": {
-              "browserTarget": "eos-wall-update:build:production",
-              "serverTarget": "eos-wall-update:server:production"
+              "browserTarget": "eos-wall:build:production",
+              "serverTarget": "eos-wall:server:production"
             }
           },
           "defaultConfiguration": "development"
@@ -145,12 +145,12 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "eos-wall-update:build:production",
-              "serverTarget": "eos-wall-update:server:production"
+              "browserTarget": "eos-wall:build:production",
+              "serverTarget": "eos-wall:server:production"
             },
             "development": {
-              "browserTarget": "eos-wall-update:build:development",
-              "serverTarget": "eos-wall-update:server:development"
+              "browserTarget": "eos-wall:build:development",
+              "serverTarget": "eos-wall:server:development"
             }
           },
           "defaultConfiguration": "production"

@@ -1,16 +1,18 @@
 {
-  "name": "eos-wall-update",
+  "name": "eos-wall",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:heroku": "node dist/server",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "dev:ssr": "ng run eos-wall-update:serve-ssr",
-    "serve:ssr": "node dist/eos-wall-update/server/main.js",
-    "build:ssr": "ng build && ng run eos-wall-update:server",
-    "prerender": "ng run eos-wall-update:prerender"
+    "dev:ssr": "ng run eos-wall:serve-ssr",
+    "serve:ssr": "node dist/eos-wall/server/main.js",
+    "build:ssr": "ng build && ng run eos-wall:server",
+    "prerender": "ng run eos-wall:prerender",
+    "postinstall": "npm run build:ssr"
   },
   "private": true,
   "dependencies": {
