@@ -33,16 +33,16 @@
         <div class="col-12 col-lg-9">
           <div class="row">
             <label class="col-12 col-lg-4 col-form-label text-lg-right fw-bold">Image url:</label>
-            <input class="col-6 col-lg-8 form-control" formControlName="image" placeholder="(eg: wwww.mywebsite.com/myimage.jpg)">
+            <input class="col-6 col-lg-8 form-control" formControlName="imageUrl" placeholder="(eg: wwww.mywebsite.com/myimage.jpg)">
           </div>
           <div class="row">
             <div class="offset-4 pl-0 col-lg-8">
-              <div *ngIf="slotForm.formGroup.controls['image'].errors && (slotForm.formGroup.controls['image'].errors['maxlength'] || slotForm.formGroup.controls['image'].errors['required']) && (this.slotForm.formGroup.controls['image'].touched || this.slotForm.isSubmitted)"
+              <div *ngIf="slotForm.formGroup.controls['imageUrl'].errors && (slotForm.formGroup.controls['imageUrl'].errors['maxlength'] || slotForm.formGroup.controls['imageUrl'].errors['required']) && (this.slotForm.formGroup.controls['imageUrl'].touched || this.slotForm.isSubmitted)"
                 class="small text-danger fw-bold">Please, use an url with up to 300 characters</div>
-                <div *ngIf="slotForm.formGroup.controls['image'].errors && slotForm.formGroup.controls['image'].errors['notFound'] && (this.slotForm.formGroup.controls['image'].touched || this.slotForm.isSubmitted)"
+                <div *ngIf="slotForm.formGroup.controls['imageUrl'].errors && slotForm.formGroup.controls['imageUrl'].errors['notFound'] && (this.slotForm.formGroup.controls['imageUrl'].touched || this.slotForm.isSubmitted)"
                 class="small text-danger fw-bold">The image could not be fetched. Please check the url
               </div>
-                <div *ngIf="slotForm.formGroup.controls['image'].errors && slotForm.formGroup.controls['image'].errors['invalidSize'] && (this.slotForm.formGroup.controls['image'].touched || this.slotForm.isSubmitted)"
+                <div *ngIf="slotForm.formGroup.controls['imageUrl'].errors && slotForm.formGroup.controls['imageUrl'].errors['invalidSize'] && (this.slotForm.formGroup.controls['imageUrl'].touched || this.slotForm.isSubmitted)"
                 class="small text-danger fw-bold">The image should have {{slot.width}}x{{slot.height}} pixels to fit properly inside the
                 slot
               </div>
@@ -50,8 +50,8 @@
           </div>
         </div>
         <div class="col-2 col-lg-2 text-center">
-          <p *ngIf="!slotForm.formGroup.value.image">Preview...</p>
-          <img *ngIf="slotForm.formGroup.value.image" class="img-fluid" [src]="slotForm.formGroup.value.image">
+          <p *ngIf="!slotForm.formGroup.value.imageUrl">Preview...</p>
+          <img *ngIf="slotForm.formGroup.value.imageUrl" class="img-fluid" [src]="slotForm.formGroup.value.imageUrl">
         </div>
       </div>
       <div class="row form-group mb-4">

@@ -55,25 +55,20 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  public pullSlots(): Promise<boolean>{
-    return new Promise((res) => {
-      this.wall.slots = [];
-      Slots.forEach((rawSlot) => {
-        const slot = new Slot({
-          id: rawSlot.id,
-          c1: [rawSlot.x1, rawSlot.y1],
-          c2: [rawSlot.x2, rawSlot.y2],
-          title: rawSlot.title,
-          image: rawSlot.image,
-          url: rawSlot.url,
-          owner: rawSlot.owner
-        });
-        this.wall.slots.push(slot);
+  public async pullSlots(): Promise<void>{
+    this.wall.slots = Slots.map((rawSlot) => {
+      return new Slot({
+        id: rawSlot.id,
+        c1: [rawSlot.x1, rawSlot.y1],
+        c2: [rawSlot.x2, rawSlot.y2],
+        title: rawSlot.title,
+        imageUrl: rawSlot.imageUrl,
+        url: rawSlot.url,
+        owner: rawSlot.owner
       });
-      this.wall.pixelsSold = 576900;
-      this.wall.pixelPrice = Slot.calculatePixelPrice(this.wall.pixelsSold);
-      res(true);
     });
+    this.wall.pixelsSold = 576900;
+    this.wall.pixelPrice = Slot.calculatePixelPrice(this.wall.pixelsSold);
   }
 
   public enableBuy() {
@@ -191,7 +186,7 @@ export class HomeComponent implements OnInit {
       // Gather information about the slot
       const formValue = await this.openBuyModal(slot);
       slot.title = formValue.title;
-      slot.image = formValue.image;
+      slot.imageUrl = formValue.image;
       slot.url = formValue.url;
       // refresh price
       await this.pullSlots();
@@ -225,7 +220,7 @@ export class HomeComponent implements OnInit {
       // Gather information about the slot
       const formValue = await this.openUpdateModal(slot);
       slot.title = formValue.title;
-      slot.image = formValue.image;
+      slot.imageUrl = formValue.image;
       slot.url = formValue.url;
       slot.owner = formValue.owner;
       // sign transaction

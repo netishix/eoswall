@@ -23,7 +23,8 @@
       <div class="handle handle-bl bg-warning" (mousedown)="selection.mousedown = 'bl'"></div>
       <div class="handle handle-l bg-warning" (mousedown)="selection.mousedown = 'l'"></div>
     </div>
-    <div *ngFor="let slot of slots" class="app-slot" [ngStyle]="slot.cssPosition" [style.backgroundImage]="'url('+slot.image+')'" [ngbTooltip]="slot.title+' ('+slot.owner+')'" [ngClass]="[(isBuying)?'disabled-pointer-events':'']">
+    <div *ngFor="let slot of slots" class="app-slot" [ngStyle]="slot.cssPosition" [style.backgroundImage]="'url('+slot.getProxyImageUrl()+')'"
+         [ngbTooltip]="slot.title+' ('+slot.owner+')'" [ngClass]="[(isBuying)?'disabled-pointer-events':'']">
       <a *ngIf="!isUpdating && !isBuying" class="app-slot-content" [href]="slot.url" target="_blank"></a>
       <div *ngIf="isUpdating" class="app-slot-content app-slot-selected" (click)="updateSlot(slot)"></div>
     </div>

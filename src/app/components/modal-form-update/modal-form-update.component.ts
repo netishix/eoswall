@@ -20,7 +20,7 @@ export class ModalFormUpdateComponent implements OnInit {
       isSubmitted: false,
       formGroup: this._FormBuilder.group({
         title: [null, Validators.compose([Validators.required, Validators.maxLength(60)])],
-        image: [null, Validators.compose([Validators.required, Validators.maxLength(300)])],
+        imageUrl: [null, Validators.compose([Validators.required, Validators.maxLength(300)])],
         url: [null, Validators.compose([Validators.required, Validators.maxLength(300)])],
         owner: [null, Validators.compose([Validators.required])]
       }),
@@ -39,11 +39,11 @@ export class ModalFormUpdateComponent implements OnInit {
   ngOnInit() {
     if (this.slot) {
       this.slotForm.formGroup.get('title')?.setValue(this.slot.title);
-      this.slotForm.formGroup.get('image')?.setValue(this.slot.image);
+      this.slotForm.formGroup.get('imageUrl')?.setValue(this.slot.imageUrl);
       this.slotForm.formGroup.get('url')?.setValue(this.slot.url);
       this.slotForm.formGroup.get('owner')?.setValue(this.slot.owner);
       const validatorFn = AppValidators.imageValidator(this.slot);
-      this.slotForm.formGroup.get('image')?.setAsyncValidators(validatorFn);
+      this.slotForm.formGroup.get('imageUrl')?.setAsyncValidators(validatorFn);
     }
   }
 }

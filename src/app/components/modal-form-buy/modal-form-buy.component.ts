@@ -20,7 +20,7 @@ export class ModalFormBuyComponent implements OnInit {
       isSubmitted: false,
       formGroup: this._FormBuilder.group({
         title: [null, Validators.compose([Validators.required, Validators.maxLength(60)])],
-        image: [null, Validators.compose([Validators.required, Validators.maxLength(300)])],
+        imageUrl: [null, Validators.compose([Validators.required, Validators.maxLength(300)])],
         url: [null, Validators.compose([Validators.required, Validators.maxLength(300)])]
       }),
       submit: () => {
@@ -38,7 +38,7 @@ export class ModalFormBuyComponent implements OnInit {
   ngOnInit() {
     if (this.slot) {
       const validatorFn = AppValidators.imageValidator(this.slot);
-      this.slotForm.formGroup.get('image')?.setAsyncValidators(validatorFn);
+      this.slotForm.formGroup.get('imageUrl')?.setAsyncValidators(validatorFn);
     }
   }
 }

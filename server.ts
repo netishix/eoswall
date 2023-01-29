@@ -5,6 +5,7 @@ import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
 import { existsSync } from 'fs';
 import { join } from 'path';
+import imageCache from './server/image-proxy'
 
 import { AppServerModule } from './src/main.server';
 
@@ -21,6 +22,9 @@ export function app(): express.Express {
 
   server.set('view engine', 'html');
   server.set('views', distFolder);
+
+  // Custom route for requesting and caching images
+  server.use(imageCache);
 
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });

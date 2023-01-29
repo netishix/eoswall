@@ -54,8 +54,8 @@
   padding:0;
   margin:0;
   z-index:1;
-  background-repeat:no-repeat;
-  background-color: #000000;
+  background-repeat: repeat;
+  background-color: transparent;
   cursor: pointer;
   kit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
   -moz-animation: fadein 1s; /* Firefox < 16 */

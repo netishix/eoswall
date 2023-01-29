@@ -13,22 +13,16 @@ export class Slot {
   public cssPosition: { left: string, top: string, right: string, bottom: string };
   public price?: Asset;
   public title: string | null;
-  public image: string | null;
+  public imageUrl: string | null;
   public url: string;
   public owner: string | null;
-
-  static calculatePixelPrice(pixelsSold: number) {
-    const wallPixels = Constants.wall.wallWidth * Constants.wall.wallHeight;
-    const slope = (pixelsSold <= 800000) ? (0.0015 / wallPixels) : (0.003 / wallPixels);
-    return (slope * pixelsSold) + 0.0005;
-  }
 
   constructor(settings: any) {
     this.id = settings.id;
     this.c1 = settings.c1;
     this.c2 = settings.c2;
     this.title = settings.title || null;
-    this.image = settings.image || null;
+    this.imageUrl = settings.imageUrl || null;
     this.url = !/^[a-z0-9]+:\/\//.test(settings.url) ? 'http://' + settings.url : settings.url;
     this.owner = settings.owner || null;
     this.width = this.c2[0] - this.c1[0];
@@ -43,6 +37,12 @@ export class Slot {
     if (settings.pixelPrice) {
       this.setPrice(settings.pixelPrice);
     }
+  }
+
+  static calculatePixelPrice(pixelsSold: number) {
+    const wallPixels = Constants.wall.wallWidth * Constants.wall.wallHeight;
+    const slope = (pixelsSold <= 800000) ? (0.0015 / wallPixels) : (0.003 / wallPixels);
+    return (slope * pixelsSold) + 0.0005;
   }
 
   public setPrice(pixelPrice: number): void {
@@ -61,4 +61,7 @@ export class Slot {
     return (condition1 && condition2);
   }
 
+  public getProxyImageUrl() {
+    return `/proxy/image?url=${this.imageUrl}`
+  }
 }
