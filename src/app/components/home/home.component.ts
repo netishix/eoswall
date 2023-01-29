@@ -205,11 +205,13 @@ export class HomeComponent implements OnInit {
       });
       this.disableBuy();
     } catch (e: any) {
-      await this.openNotificationModal({
-        title: 'Something went wrong',
-        description: e,
-        type: 'danger'
-      });
+      if (e instanceof Error) {
+        await this.openNotificationModal({
+          title: 'Something went wrong',
+          description: e.message,
+          type: 'danger'
+        });
+      }
     }
     this.wall.isLoading = false;
   }
@@ -235,11 +237,13 @@ export class HomeComponent implements OnInit {
       });
       this.disableUpdate();
     } catch (e: any) {
-      await this.openNotificationModal({
-        title: 'Something went wrong',
-        description: e,
-        type: 'danger'
-      });
+      if (e instanceof Error) {
+        await this.openNotificationModal({
+          title: 'Something went wrong',
+          description: e.message,
+          type: 'danger'
+        });
+      }
     }
     this.wall.isLoading = false;
   }

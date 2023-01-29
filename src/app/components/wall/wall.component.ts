@@ -30,6 +30,7 @@ export class WallComponent implements OnInit, OnChanges {
     };
     onMouseMove: Function;
     onMouseUp: Function;
+    onClick: Function;
   } = {
       intersects: false,
       exceeded: false,
@@ -109,6 +110,9 @@ export class WallComponent implements OnInit, OnChanges {
             this.selection.intersects = this.intersects(this.selection.slot.c1, this.selection.slot.c2);
           }
         }
+      },
+      onClick: (event: any) => {
+        console.log(event);
       }
     };
 

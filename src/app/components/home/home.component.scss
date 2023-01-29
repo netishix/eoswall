@@ -2,7 +2,7 @@
 @import "../../../../node_modules/bootstrap/scss/variables";
 @import "../../../../node_modules/bootstrap/scss/mixins";
 
-hr{
+hr {
   flex: 1;
   border: none;
   height: 1px;
@@ -28,4 +28,8 @@ hr{
   @include media-breakpoint-up(sm) {
     zoom:0.9;
   }
+}
+
+.extra-padding-top {
+  padding-top: 5em!important;
 }

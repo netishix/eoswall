@@ -1,13 +1,13 @@
-<div class="container py-4">
+<div class="container pb-4" [ngClass]="wall.isBuying || wall.isUpdating ? 'extra-padding-top' : 'pt-4'">
 	<div class="row">
 		<div class="col-12">
 			<div *ngIf="!wall.isLoading" class="col-12 text-center mb-3">
 
-				<div class="text-center d-none d-lg-block mb-3" *ngIf="!wall.isBuying && !wall.isUpdating">
-					<button class="btn btn-success me-2" (click)="enableBuy();">Buy</button>
-					<button class="btn btn-success me-2" (click)="enableUpdate();">Update slot</button>
-					<hr>
-				</div>
+<!--				<div class="text-center d-none d-lg-block mb-3" *ngIf="!wall.isBuying && !wall.isUpdating">-->
+<!--					<button class="btn btn-success me-2" (click)="enableBuy();">Buy</button>-->
+<!--					<button class="btn btn-success me-2" (click)="enableUpdate();">Update slot</button>-->
+<!--					<hr>-->
+<!--				</div>-->
 
 				<span *ngIf="wall.pixelsSold" class="me-3">
 					Pixels sold:
@@ -15,10 +15,10 @@
 					<span class="badge bg-secondary">{{wall.pixelsSold * 100 / 1000000}}% </span>
 				</span>
 
-				<span class="me-3">
-					Pixel price:
-					<span class="badge bg-secondary">{{wall.pixelPrice ? wall.pixelPrice.toFixed(4)+' EOS' : ''}}</span>
-				</span>
+<!--				<span class="me-3">-->
+<!--					Pixel price:-->
+<!--					<span class="badge bg-secondary">{{wall.pixelPrice ? wall.pixelPrice.toFixed(4)+' EOS' : ''}}</span>-->
+<!--				</span>-->
 
 			</div>
 			<div *ngIf="wall.isLoading" class="col-12 text-center mb-3">
