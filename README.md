@@ -2,7 +2,7 @@
 
 URL: https://eos-wall.onrender.com/
 
-## ¿What is The EOS Wall?
+## Introduction
 
 The EOS Wall project was born as a proof of concept of EOS DAPP.
 Every user that has an EOS account can buy a portion of the wall called
@@ -10,7 +10,7 @@ Every user that has an EOS account can buy a portion of the wall called
 All the slots are stored in the EOS blockchain and can be updated at anytime by its owners.
 
 
-## ¿How is the price calculated?
+## Price Calculation
 
 The price of a slot is calculated with the following formula:
 
@@ -28,18 +28,18 @@ When, sold pixels > 800,000 pixels, then:
 ```Pixel price</span> = 0.003 EOS / 1,000,000 pixels x Pixels sold + 0.0005 EOS```
 
 
-## ¿Who pays for RAM?
+## RAM Cost
 
 The RAM for every new slot stored in the wall is payed by the smart contract itself.
 
 
-## ¿Can I trust the external links?
+## Trusting external sites
 
-No, you can't. This app is not responsible for the content of external sites referenced by the slots.
+Trust external sites at your own risk. This app is not responsible for the content of external sites referenced by the slots.
 However, we make our best to constantly moderate the slots. Any slot considered malicious will be removed from the wall.
 
 
-## ¿Where can I find the smart contract?
+## Smart Contract
 
 The smart contract has the following structure. For more information please refer to the Ricardian Contracts
 attached to the smart contract.
@@ -57,6 +57,6 @@ attached to the smart contract.
 * __update__
 
 
-## ¿Why do I need Scatter to buy a slot?
+## Signing Transactions with Scatter
 
 To buy or update a slot, it is necessary to interact with the EOS blockchain. Scatter extension has the ability to interact with the blockchain by pushing and signing transactions safely using your browser.
