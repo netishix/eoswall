@@ -6,7 +6,7 @@ URL: https://eos-wall.onrender.com/
 
 The EOS Wall project was born as a proof of concept of EOS DAPP.
 Every user that has an EOS account can buy a portion of the wall called
-**slot** A slot is composed by a title, an image and an url to redirect when the slot is clicked.
+**slot**. A slot is composed by a title, an image and an url to redirect when the slot is clicked.
 All the slots are stored in the EOS blockchain and can be updated at anytime by its owners.
 
 
@@ -33,7 +33,7 @@ When, sold pixels > 800,000 pixels, then:
 The RAM for every new slot stored in the wall is payed by the smart contract itself.
 
 
-## Trusting external sites
+## Trusting External Sites
 
 Trust external sites at your own risk. This app is not responsible for the content of external sites referenced by the slots.
 However, we make our best to constantly moderate the slots. Any slot considered malicious will be removed from the wall.
@@ -44,19 +44,18 @@ However, we make our best to constantly moderate the slots. Any slot considered 
 The smart contract has the following structure. For more information please refer to the Ricardian Contracts
 attached to the smart contract.
 
-### Contract: 
+```
+Contract: eosisrocking
 
-* __eosisrocking__
+Tables: 
+ -> slot (eosisrocking scope)
+ -> account (account scope)
+ 
+Public Actions:
+ -> buy
+ -> update
+```
 
-### Tables:  
-* __slot__ (eosisrocking scope)
-* __account__ (account scope)
-
-### Public actions:
-* __buy__
-* __update__
-
-
-## Signing Transactions with Scatter
+## Signing Transactions
 
 To buy or update a slot, it is necessary to interact with the EOS blockchain. Scatter extension has the ability to interact with the blockchain by pushing and signing transactions safely using your browser.
