@@ -25,7 +25,7 @@ When, sold pixels <= 800,000 pixels, then:
 
 When, sold pixels > 800,000 pixels, then:
 
-```Pixel price</span> = 0.003 EOS / 1,000,000 pixels x Pixels sold + 0.0005 EOS```
+```Pixel price = 0.003 EOS / 1,000,000 pixels x Pixels sold + 0.0005 EOS```
 
 
 ## RAM Cost
